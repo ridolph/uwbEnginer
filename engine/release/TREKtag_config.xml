@@ -1,0 +1,17 @@
+<config>
+ <tag_cfg size="0.15" history="100"/>
+ <tag ID="0" label="Tag 0"/>
+ <tag ID="1" label="Tag 1"/>
+ <tag ID="2" label="Tag 2"/>
+ <tag ID="3" label="Tag 3"/>
+ <tag ID="4" label="Tag 4"/>
+ <tag ID="5" label="Tag 5"/>
+ <tag ID="6" label="Tag 6"/>
+ <tag ID="7" label="Tag 7"/>
+ <tag ID="8" label="Tag 8"/>
+ <tag ID="9" label="Tag 9"/>
+ <tag ID="a" label="Tag 10"/>
+ <tag ID="b" label="Tag 11"/>
+ <tag ID="c" label="Tag 12"/>
+ <tag ID="3f" label="Tag 63"/>
+</config>

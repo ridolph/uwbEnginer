@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>499</width>
+    <height>395</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>乾坤物联定位引擎</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/icons/DWctrler.ico</normaloff>:/icons/DWctrler.ico</iconset>
+  </property>
+  <widget class="GraphicsWidget" name="graphicsWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>499</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="viewMenu">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="helpMenu">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>功能</string>
+    </property>
+    <addaction name="actionConfigServer"/>
+    <addaction name="actionScanConfig"/>
+    <addaction name="actionTagManage"/>
+   </widget>
+   <addaction name="viewMenu"/>
+   <addaction name="helpMenu"/>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="viewSettings_dw">
+   <property name="windowTitle">
+    <string>Settings</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="ViewSettingsWidget" name="viewSettings_w"/>
+  </widget>
+  <widget class="QDockWidget" name="minimap_dw">
+   <property name="windowTitle">
+    <string>Minimap</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="MinimapView" name="minimap"/>
+  </widget>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionConfig">
+   <property name="text">
+    <string>Channel Config</string>
+   </property>
+  </action>
+  <action name="actionSetServer">
+   <property name="text">
+    <string>设置TCP服务器</string>
+   </property>
+  </action>
+  <action name="actionConfigServer">
+   <property name="text">
+    <string>配置TCP服务器地址</string>
+   </property>
+  </action>
+  <action name="actionScanConfig">
+   <property name="text">
+    <string>系统参数配置</string>
+   </property>
+  </action>
+  <action name="actionTagManage">
+   <property name="text">
+    <string>设备管理</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ViewSettingsWidget</class>
+   <extends>QWidget</extends>
+   <header>ViewSettingsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GraphicsWidget</class>
+   <extends>QWidget</extends>
+   <header>GraphicsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MinimapView</class>
+   <extends>QWidget</extends>
+   <header>MinimapView.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
