@@ -868,19 +868,97 @@ void UWB_TcpClient::backupSetting()
 
 
 /*************************************************************
-*	Name:		positionCorrect
-*	Func:		标签位置区域纠正，防止超出区域后后台显示出错
-*	Input:		fx: 标签坐标X值 fy:标签坐标Y值 
-				fx_j,fy_j: 若有校正值则进行偏移矫正
-*	Output:		纠正后的X,Y坐标值
+*	Name:		sendTagStatus
+*	Func:		发送标签状态
+*	Input:		tag_id: 标签ID tag_status: 标签状态
+				tag_area: 标签所处区域
+*	Output:		void
 *	Return:		void
 **************************************************************/
-void UWB_TcpClient::sendTagStatus(int tag_id, int tag_status, int tag_area)
+void UWB_TcpClient::sendTagStatus(int tag_id, int tag_status, QString tag_area)
 {
-	printf("sendTagStatus\n");
+	int msgType = MSG_TYPE_POSITION;
 
+	cJSON *posJson = cJSON_CreateObject();
+	
+	if (posJson == NULL)
+	{
+		return;
+	}
+
+	QDateTime time = QDateTime::currentDateTime();
+	int tim_t = time.toTime_t();
+
+	cJSON_AddNumberToObject(posJson, "type", 9);
+	cJSON_AddNumberToObject(posJson, "tag_id", tag_id);
+	cJSON_AddNumberToObject(posJson, "tag_status", tag_status);
+	cJSON_AddStringToObject(posJson, "pos_code", tag_area.toLatin1().data());
+	cJSON_AddNumberToObject(posJson, "timestamp",tim_t);
+
+	char *strPosData = cJSON_Print(posJson);
+	qDebug() << "send pos:"<< strPosData;
+   // My_Debug() << "send pos:"<< strPosData;
+	QString s(strPosData);
+
+	QByteArray outBlock ;
+	outBlock = outBlock.append(s);
+	outBlock = outBlock.append("*");
+
+	QDataStream out(&outBlock, QIODevice::WriteOnly);
+	out.setVersion(QDataStream::Qt_5_7);
+	sendMsg(outBlock);
+
+	cJSON_Delete(posJson);
+	free(strPosData);
+	printf("sendTagStatus\n");
 }
 
+
+/*************************************************************
+*	Name:		sendAncStatus
+*	Func:		发送基站状态
+*	Input:		anc_id: 基站ID anc_status: 基站状态
+				tag_num: 基站标签总数
+*	Output:		void
+*	Return:		void
+**************************************************************/
+void UWB_TcpClient::sendAncStatus(int tag_id, int tag_status, int tag_num)
+{
+	 int msgType = MSG_TYPE_POSITION;
+
+	 cJSON *posJson = cJSON_CreateObject();
+	 
+	 if (posJson == NULL)
+	 {
+		 return;
+	 }
+
+	 QDateTime time = QDateTime::currentDateTime();
+	 int tim_t = time.toTime_t();
+
+	 cJSON_AddNumberToObject(posJson, "type", 8);
+	 cJSON_AddNumberToObject(posJson, "anchor_id", tag_id);
+	 cJSON_AddNumberToObject(posJson, "anchor_status", tag_status);
+	 cJSON_AddNumberToObject(posJson, "online_tag_number", tag_num);
+	 cJSON_AddNumberToObject(posJson, "timestamp",tim_t);
+
+	 char *strPosData = cJSON_Print(posJson);
+	 qDebug() << "send pos:"<< strPosData;
+	// My_Debug() << "send pos:"<< strPosData;
+	 QString s(strPosData);
+
+	 QByteArray outBlock ;
+	 outBlock = outBlock.append(s);
+	 outBlock = outBlock.append("*");
+
+	 QDataStream out(&outBlock, QIODevice::WriteOnly);
+	 out.setVersion(QDataStream::Qt_5_7);
+	 sendMsg(outBlock);
+
+	 cJSON_Delete(posJson);
+	 free(strPosData);
+	 printf("sendAncStatus\n");
+}
 
 
 

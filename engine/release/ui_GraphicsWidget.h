@@ -25,9 +25,9 @@ class Ui_GraphicsWidget
 {
 public:
     QGridLayout *gridLayout;
+    QTableWidget *tagTable;
     GraphicsView *graphicsView;
     QTableWidget *anchorTable;
-    QTableWidget *tagTable;
 
     void setupUi(QWidget *GraphicsWidget)
     {
@@ -35,45 +35,10 @@ public:
             GraphicsWidget->setObjectName(QStringLiteral("GraphicsWidget"));
         GraphicsWidget->setWindowModality(Qt::NonModal);
         GraphicsWidget->resize(1074, 668);
+        GraphicsWidget->setMaximumSize(QSize(16777215, 800));
         gridLayout = new QGridLayout(GraphicsWidget);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setSizeConstraint(QLayout::SetNoConstraint);
-        graphicsView = new GraphicsView(GraphicsWidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-
-        gridLayout->addWidget(graphicsView, 1, 0, 1, 2);
-
-        anchorTable = new QTableWidget(GraphicsWidget);
-        if (anchorTable->columnCount() < 12)
-            anchorTable->setColumnCount(12);
-        if (anchorTable->rowCount() < 16)
-            anchorTable->setRowCount(16);
-        anchorTable->setObjectName(QStringLiteral("anchorTable"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(anchorTable->sizePolicy().hasHeightForWidth());
-        anchorTable->setSizePolicy(sizePolicy);
-        anchorTable->setMinimumSize(QSize(0, 10));
-        anchorTable->setMaximumSize(QSize(350, 16777215));
-        QFont font;
-        font.setPointSize(8);
-        anchorTable->setFont(font);
-        anchorTable->setLayoutDirection(Qt::LeftToRight);
-        anchorTable->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-        anchorTable->setAlternatingRowColors(true);
-        anchorTable->setRowCount(16);
-        anchorTable->setColumnCount(12);
-        anchorTable->horizontalHeader()->setDefaultSectionSize(70);
-        anchorTable->horizontalHeader()->setMinimumSectionSize(70);
-        anchorTable->horizontalHeader()->setStretchLastSection(false);
-        anchorTable->verticalHeader()->setVisible(false);
-        anchorTable->verticalHeader()->setDefaultSectionSize(18);
-        anchorTable->verticalHeader()->setHighlightSections(true);
-        anchorTable->verticalHeader()->setMinimumSectionSize(18);
-
-        gridLayout->addWidget(anchorTable, 0, 0, 1, 1);
-
         tagTable = new QTableWidget(GraphicsWidget);
         if (tagTable->columnCount() < 23)
             tagTable->setColumnCount(23);
@@ -98,10 +63,15 @@ public:
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tagTable->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         tagTable->setObjectName(QStringLiteral("tagTable"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(tagTable->sizePolicy().hasHeightForWidth());
         tagTable->setSizePolicy(sizePolicy);
         tagTable->setMinimumSize(QSize(0, 71));
         tagTable->setMaximumSize(QSize(700, 16777215));
+        QFont font;
+        font.setPointSize(8);
         tagTable->setFont(font);
         tagTable->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         tagTable->setAlternatingRowColors(true);
@@ -114,6 +84,38 @@ public:
         tagTable->verticalHeader()->setMinimumSectionSize(18);
 
         gridLayout->addWidget(tagTable, 0, 1, 1, 1);
+
+        graphicsView = new GraphicsView(GraphicsWidget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setMaximumSize(QSize(16777215, 16777215));
+
+        gridLayout->addWidget(graphicsView, 2, 0, 1, 2);
+
+        anchorTable = new QTableWidget(GraphicsWidget);
+        if (anchorTable->columnCount() < 12)
+            anchorTable->setColumnCount(12);
+        if (anchorTable->rowCount() < 16)
+            anchorTable->setRowCount(16);
+        anchorTable->setObjectName(QStringLiteral("anchorTable"));
+        sizePolicy.setHeightForWidth(anchorTable->sizePolicy().hasHeightForWidth());
+        anchorTable->setSizePolicy(sizePolicy);
+        anchorTable->setMinimumSize(QSize(0, 10));
+        anchorTable->setMaximumSize(QSize(350, 16777215));
+        anchorTable->setFont(font);
+        anchorTable->setLayoutDirection(Qt::LeftToRight);
+        anchorTable->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        anchorTable->setAlternatingRowColors(true);
+        anchorTable->setRowCount(16);
+        anchorTable->setColumnCount(12);
+        anchorTable->horizontalHeader()->setDefaultSectionSize(70);
+        anchorTable->horizontalHeader()->setMinimumSectionSize(70);
+        anchorTable->horizontalHeader()->setStretchLastSection(false);
+        anchorTable->verticalHeader()->setVisible(false);
+        anchorTable->verticalHeader()->setDefaultSectionSize(18);
+        anchorTable->verticalHeader()->setHighlightSections(true);
+        anchorTable->verticalHeader()->setMinimumSectionSize(18);
+
+        gridLayout->addWidget(anchorTable, 0, 0, 1, 1);
 
 
         retranslateUi(GraphicsWidget);

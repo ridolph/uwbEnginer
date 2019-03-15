@@ -35,6 +35,8 @@ public:
     QAction *actionConfigServer;
     QAction *actionScanConfig;
     QAction *actionTagManage;
+    QAction *actionDd;
+    QAction *actionDddd;
     GraphicsWidget *graphicsWidget;
     QMenuBar *menuBar;
     QMenu *viewMenu;
@@ -51,7 +53,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(499, 395);
         QIcon icon;
         icon.addFile(QStringLiteral(":/icons/DWctrler.ico"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
@@ -67,12 +69,16 @@ public:
         actionScanConfig->setObjectName(QStringLiteral("actionScanConfig"));
         actionTagManage = new QAction(MainWindow);
         actionTagManage->setObjectName(QStringLiteral("actionTagManage"));
+        actionDd = new QAction(MainWindow);
+        actionDd->setObjectName(QStringLiteral("actionDd"));
+        actionDddd = new QAction(MainWindow);
+        actionDddd->setObjectName(QStringLiteral("actionDddd"));
         graphicsWidget = new GraphicsWidget(MainWindow);
         graphicsWidget->setObjectName(QStringLiteral("graphicsWidget"));
         MainWindow->setCentralWidget(graphicsWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 17));
+        menuBar->setGeometry(QRect(0, 0, 499, 23));
         viewMenu = new QMenu(menuBar);
         viewMenu->setObjectName(QStringLiteral("viewMenu"));
         helpMenu = new QMenu(menuBar);
@@ -123,6 +129,8 @@ public:
         actionConfigServer->setText(QApplication::translate("MainWindow", "\351\205\215\347\275\256TCP\346\234\215\345\212\241\345\231\250\345\234\260\345\235\200", 0));
         actionScanConfig->setText(QApplication::translate("MainWindow", "\347\263\273\347\273\237\345\217\202\346\225\260\351\205\215\347\275\256", 0));
         actionTagManage->setText(QApplication::translate("MainWindow", "\350\256\276\345\244\207\347\256\241\347\220\206", 0));
+        actionDd->setText(QApplication::translate("MainWindow", "\345\237\272\347\253\231\346\211\253\346\217\217", 0));
+        actionDddd->setText(QApplication::translate("MainWindow", "\345\217\202\346\225\260\344\270\213\345\217\221", 0));
         viewMenu->setTitle(QApplication::translate("MainWindow", "&View", 0));
         helpMenu->setTitle(QApplication::translate("MainWindow", "Help", 0));
         menu->setTitle(QApplication::translate("MainWindow", "\345\212\237\350\203\275", 0));

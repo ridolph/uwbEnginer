@@ -8,14 +8,18 @@
 #include <QDateTime>
 #include <QTextCodec>
 #include <QFile>
+#include <QDomDocument>
+
+
+
 
 //#define TCPSERVER_PORT 51000
 
-QTextCodec *gbkCode;	/*  定义转换编码格式的全局变量   */
+static QTextCodec *gbkCode;	/*  定义转换编码格式的全局变量   */
 
 #define Mtr(s) (gbkCode->toUnicode(s))
 
-#define SEND_TIME_VALUE	60000	/*	定时发送系统时间值	*/
+#define SEND_TIME_VALUE	5000	/*	定时发送系统时间值	*/
 
 AncManageWidget::AncManageWidget(QWidget *parent) :
     QWidget(parent),
@@ -25,6 +29,11 @@ AncManageWidget::AncManageWidget(QWidget *parent) :
     /* 新增 防止有时候出现显示中文乱码 */
     gbkCode = QTextCodec::codecForName("GB2312");//你完全可以改成GB18080等编码
     ui->setupUi(this);
+
+	/*	建立组界面控件	*/
+	_viewAncGroupWidget = new ViewAncGroupWidget;
+	
+	/*	界面初始化	*/
     init();
 
 	/*	建立定时发送时间定时器	*/
@@ -47,7 +56,7 @@ AncManageWidget::~AncManageWidget()
 void AncManageWidget::init()
 {
     //menu
-    this->setFixedSize(560, 460);
+    this->setFixedSize(760, 660);
     _menuBar = new QMenuBar(this);
     QRect rect =  this->geometry();
     _menuBar->setGeometry(QRect(0, 0, rect.width(), 30));
@@ -63,15 +72,26 @@ void AncManageWidget::init()
 
     readNewVer();
 
+	/*	层组管理	*/
+	_setAncGroupParmAction = new QAction(Mtr("层组管理"), this);
+	_settingMenu->addAction(_setAncGroupParmAction);
+
+	connect(_setAncGroupParmAction, SIGNAL(triggered(bool)), _viewAncGroupWidget, SLOT(show()));
+	
+
     //table
     this->setWindowTitle(Mtr("基站管理"));
     ui->ancManageTab->setColumnCount(ColumnCount);
     QStringList header;
-    header<<"AncId"<<"Addr"<<Mtr("版本")<<Mtr("状态");
+    header<< "Group" << "AncId" << "X\n(m)" << "Y\n(m)" << "Z\n(m)" << "Addr" << Mtr("版本") << Mtr("状态");
     ui->ancManageTab->setHorizontalHeaderLabels(header);
     ui->ancManageTab->verticalHeader()->setVisible(false);
 
-    ui->ancManageTab->setColumnWidth(ColumnID,100);
+	ui->ancManageTab->setColumnWidth(ColumnGroup,50);
+	ui->ancManageTab->setColumnWidth(ColumnID,100);
+	ui->ancManageTab->setColumnWidth(ColumnX,50);
+	ui->ancManageTab->setColumnWidth(ColumnY,50);
+    ui->ancManageTab->setColumnWidth(ColumnZ,50);
     ui->ancManageTab->setColumnWidth(ColumnAddr,140);
     ui->ancManageTab->setColumnWidth(ColumnVer,200);
     ui->ancManageTab->setColumnWidth(ColumnOlStatus,100);
@@ -80,7 +100,7 @@ void AncManageWidget::init()
 
     //other
     _periodTimer = new QTimer;
-    _periodTimer->setInterval(1000);//每1000ms检测一次在线状态。
+    _periodTimer->setInterval(60000);//每1000ms检测一次在线状态。一分钟
     _periodTimer->start();
     connect(_periodTimer, SIGNAL(timeout()), this, SLOT(periodProcess()));
 
@@ -94,6 +114,7 @@ void AncManageWidget::init()
     _start_upgrade_flag = 0;
 
     connect(ui->ancManageTab, SIGNAL(cellClicked(int, int)), this, SLOT(cellClicked(int,int)));
+
 
 }
 
@@ -178,6 +199,7 @@ void AncManageWidget::checkOnline()
                 ui->ancManageTab->item(row, ColumnOlStatus)->setText(Mtr("离线"));
             }
             iter.value().online = 0;
+			emit sendDownLineInfo(iter.value().ridx);
         }
     }
 
@@ -260,18 +282,117 @@ int AncManageWidget::getAncItem(int aid, AncItem* pItem)
 }
 
 
+void AncManageWidget::getAncConfigInfo(int aid, int *group, float *x, float *y, float *z)
+{
+	QFile file("./TREKanc_config.xml");
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		qDebug(qPrintable(QString("Error: Cannot read file %1 %2").arg("./TREKview_config.xml").arg(file.errorString())));
+		return;
+	}
+	printf("a=================\n");
+	QDomDocument doc;
+	QString error;
+	int errorLine;
+	int errorColumn;
+	AncItem item;
+	getAncItem(aid, &item);
+
+	if(doc.setContent(&file, false, &error, &errorLine, &errorColumn))
+	{
+	 //   qDebug() << "file error !!!" << error << errorLine << errorColumn;
+	}
+
+	QDomElement config = doc.documentElement();
+
+	if( config.tagName() == "config" )
+	{
+		QDomNode n = config.firstChild();
+		while( !n.isNull() )
+		{
+			QDomElement e = n.toElement();
+			if( !e.isNull() )
+			{
+				if( e.tagName() == "anc" )
+				{
+					bool ok;
+					int id = (e.attribute( "ID", "" )).toInt(&ok);
+
+					id &= 0x0F;
+					if(ok)
+					{
+						if(aid == (id & 0xf))
+						{
+							*group = item.group = (e.attribute("Group", "")).toInt(&ok);
+							*x = item.x = (e.attribute("x", "0.0")).toDouble(&ok);
+							*y = item.y = (e.attribute("y", "0.0")).toDouble(&ok);
+							*z = item.z = (e.attribute("z", "0.0")).toDouble(&ok);
+					
+							//setAncItem(aid, item);
+							printf("aaaid = %d item.group = %d item.x = %f item.y = %f item.z = %f\n", aid, item.group, item.x,item.y, item.z);
+							return;
+						}
+					}
+				}
+			}
+			n = n.nextSibling();
+		}
+	}
+	file.close();
+}
+
 //添加新基站信息，更新table界面
 void AncManageWidget::loadAncItem(int aid, int isChecked, QString ver)
 {
     AncItem t_item;
+	int _group;
+	float _x, _y, _z;
+	
     if(getAncItem(aid, &t_item) == true)
     {
         return;
     }
 
+
     int newIndex = ui->ancManageTab->rowCount();
     int rowCount = newIndex + 1;
     ui->ancManageTab->setRowCount(rowCount);
+
+#if 1	//20190313 增加标签信息显示
+
+#if 0
+	 t_item.group = 0;
+	 t_item.x = 0.00;
+	 t_item.y = 0.00;
+	 t_item.z = 0.00;
+#endif
+#if 1
+	 getAncConfigInfo(aid, &_group, &_x, &_y, &_z);
+
+	 printf("t_item.group = %d, t_item.x = %f, t_item.y = %f, t_item.z = %f\n", _group, _x, _y, _z);
+	
+	 QTableWidgetItem* itemg = new QTableWidgetItem;
+	 itemg->setText(QString::number(_group, 'd', 0));	
+	 itemg->setFlags(itemg->flags() | Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled);
+	 ui->ancManageTab->setItem(newIndex, ColumnGroup, itemg);
+
+	 QTableWidgetItem* itemx = new QTableWidgetItem;
+	 itemx->setText(QString::number(_x, 'f', 2)); 
+	 itemx->setFlags(itemx->flags() | Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled);
+	 ui->ancManageTab->setItem(newIndex, ColumnX, itemx);
+
+	 QTableWidgetItem* itemy = new QTableWidgetItem;
+	 itemy->setText(QString::number(_y, 'f', 2)); 
+	 itemy->setFlags(itemy->flags() | Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled);
+	 ui->ancManageTab->setItem(newIndex, ColumnY, itemy);
+
+	 QTableWidgetItem* itemz = new QTableWidgetItem;
+	 itemz->setText(QString::number(_z, 'f', 2)); 
+	 itemz->setFlags(itemz->flags() | Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled);
+	 ui->ancManageTab->setItem(newIndex, ColumnZ, itemz);
+	 #endif
+#endif
 
     //set aid checked
     QTableWidgetItem* item1 = new QTableWidgetItem;
@@ -327,6 +448,10 @@ void AncManageWidget::loadAncItem(int aid, int isChecked, QString ver)
     tmpAnc.isChecked = isChecked;
     tmpAnc.query_ver_ack = 0;
     tmpAnc.ver = ver;
+	tmpAnc.group = _group;
+	tmpAnc.x = _x;
+	tmpAnc.x = _y;
+	tmpAnc.x = _z;
     _ancS.insert(aid, tmpAnc);
 }
 
@@ -569,6 +694,7 @@ void AncManageWidget::startUpTimeout()
 //every 10s report upgrade status
 void AncManageWidget::reportStaTimeout()
 {
+	
     if(_start_upgrade_flag)
     {
         _reportStaTimer->start();
@@ -884,7 +1010,60 @@ void AncManageWidget::senDataTimeout(void)
 		#endif
 	}
 
-    printf("cmd === %s _rtlsclientValue._ancMaxShowCount = %d\n", cmd_send_time.toStdString().data(), value);
+	//emit sendDownLineInfo(11);
+	//printf("sendDownLineInfo\n");
+   // printf("cmd === %s _rtlsclientValue._ancMaxShowCount = %d\n", cmd_send_time.toStdString().data(), value);
+
 	//printf("senDataTimeout %d\n", current_msec.toInt());
 }
+
+/*************************************************************
+*	Name:		initAncManage
+*	Func:		基站信息初始化
+*	Input:		group:	基站所属组	x,y,z:基站坐标
+*	Output:		void
+*	Return:		void
+**************************************************************/
+void AncManageWidget::initAncInfoManage(int ancId, int group, double x, double y, double z)
+{
+#if 0
+	printf("initAncInfoManage ancId = %d, group = %d, x=%f, y=%f, z=%f\n", ancId, group, x, y, z);
+
+
+	int rowCount = ui->ancManageTab->rowCount();
+	int index = 0;
+	for(index = 0; index < rowCount; index++)
+	{
+		if(ancId == ui->ancManageTab->item(index,ColumnID)->text().toInt())
+		{
+		   break;
+		}
+	}
+
+	if(index == rowCount)
+	{
+		qDebug()<<"cmd result err";
+		return;
+	}
+
+	printf("ancId = %d index = %d\n", ancId, index);
+
+	AncItem item;
+	getAncItem(ancId, &item);
+
+	//ui->ancManageTab->item(index, ColumnGroup)->setText(QString::number(group, 'd', 0));
+	//ui->ancManageTab->item(index, ColumnX)->setText(QString::number(x, 'f', 2));
+	//ui->ancManageTab->item(index, ColumnY)->setText(QString::number(y, 'f', 2));
+	//ui->ancManageTab->item(index, ColumnZ)->setText(QString::number(z, 'f', 2));
+	
+	item.group = group;
+	item.x = x;
+	item.y = y;
+	item.z = z;
+
+	setAncItem(ancId, item);
+#endif
+}
+
+
 

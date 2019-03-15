@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     tools/vec1.cpp \
     uwb_comm/UWB_UdpClient.cpp \
     mylog/Mylog.cpp \
-    tools/linklist.cpp
+    tools/linklist.cpp \
+    views/viewancgroupwidget.cpp
 
 HEADERS  += \
     RTLSDisplayApplication.h \
@@ -96,7 +97,8 @@ HEADERS  += \
     uwb_comm/UWB_UdpClient.h \
     mylog/Mylog.h \
     KlmanFilter.h \
-    tools/linklist.h
+    tools/linklist.h \
+    views/viewancgroupwidget.h
 
 FORMS    += \
     views/mainwindow.ui \

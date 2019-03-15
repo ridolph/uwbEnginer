@@ -31,7 +31,7 @@ public:
         AncManageWidget->resize(748, 546);
         ancManageTab = new QTableWidget(AncManageWidget);
         ancManageTab->setObjectName(QStringLiteral("ancManageTab"));
-        ancManageTab->setGeometry(QRect(30, 30, 511, 361));
+        ancManageTab->setGeometry(QRect(30, 10, 701, 511));
 
         retranslateUi(AncManageWidget);
 

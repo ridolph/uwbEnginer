@@ -26,6 +26,7 @@ class GraphicsWidget;
 class GraphicsView;
 class RTLSClient;
 class setServerWidget;
+class AncManageWidget;
 
 /**
  * The RTLSDisplayApplication class is a singleton class which handles the application.
@@ -86,6 +87,9 @@ private:
     RTLSClient *_client;
 
     MainWindow *_mainWindow;
+
+    /*  修改基站显示界面    lwq 20190313    */
+    AncManageWidget *_ancMangeWidget;
 
     bool _ready;
 

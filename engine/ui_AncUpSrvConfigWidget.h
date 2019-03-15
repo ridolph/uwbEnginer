@@ -39,9 +39,10 @@ public:
     {
         if (AncUpSrvConfigWidget->objectName().isEmpty())
             AncUpSrvConfigWidget->setObjectName(QStringLiteral("AncUpSrvConfigWidget"));
+        AncUpSrvConfigWidget->setEnabled(true);
         AncUpSrvConfigWidget->resize(335, 267);
         AncUpSrvConfigWidget->setMinimumSize(QSize(335, 267));
-        AncUpSrvConfigWidget->setMaximumSize(QSize(335, 267));
+        AncUpSrvConfigWidget->setMaximumSize(QSize(360, 280));
         label = new QLabel(AncUpSrvConfigWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(40, 20, 91, 31));
@@ -62,10 +63,10 @@ public:
         upFilePathEdit->setGeometry(QRect(160, 100, 141, 31));
         okBtn = new QPushButton(AncUpSrvConfigWidget);
         okBtn->setObjectName(QStringLiteral("okBtn"));
-        okBtn->setGeometry(QRect(90, 200, 75, 41));
+        okBtn->setGeometry(QRect(50, 200, 75, 41));
         cancelBtn = new QPushButton(AncUpSrvConfigWidget);
         cancelBtn->setObjectName(QStringLiteral("cancelBtn"));
-        cancelBtn->setGeometry(QRect(220, 200, 75, 41));
+        cancelBtn->setGeometry(QRect(180, 200, 75, 41));
         label_4 = new QLabel(AncUpSrvConfigWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(40, 140, 101, 31));

@@ -107,7 +107,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //qDebug() << "udp Listen Port 5006";
     QObject::connect(_udpSocket, &QUdpSocket::readyRead, RTLSDisplayApplication::client(), &RTLSClient::newUdpData);
     QObject::connect(RTLSDisplayApplication::client(), &RTLSClient::updateAncAddr, _tagManageW, &AncManageWidget::updateAncAddr);
+	QObject::connect(RTLSDisplayApplication::client(), &RTLSClient::updateAncAddr, RTLSDisplayApplication::client(), &RTLSClient::sendAncStatus);
 
+	/*	关联检测基站掉线处理	*/
+	QObject::connect(_tagManageW, &AncManageWidget::sendDownLineInfo, RTLSDisplayApplication::client(), &RTLSClient::sendAncStatusDown);
 }
 
 

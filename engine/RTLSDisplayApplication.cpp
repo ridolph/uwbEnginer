@@ -55,6 +55,8 @@ RTLSDisplayApplication::RTLSDisplayApplication(int &argc, char **argv, int remai
 
     _client = new RTLSClient(this);
 
+	_ancMangeWidget = new AncManageWidget;
+
     _mainWindow = new MainWindow();
     _mainWindow->resize(desktopWidth/2,desktopHeight/2);
 
@@ -91,6 +93,10 @@ RTLSDisplayApplication::RTLSDisplayApplication(int &argc, char **argv, int remai
 
     QObject::connect(_client, SIGNAL(closeApp()), this, SLOT(closeApp()));
 
+
+	/*	关联基站配置文件相关数据	*/
+	QObject::connect(_client, SIGNAL(anchInfo(int, int, double, double, double)), _ancMangeWidget, SLOT(initAncInfoManage(int, int , double , double , double )));
+	
     //emit ready signal so other components can finish initialisation
     emit ready();
 }
@@ -105,6 +111,8 @@ RTLSDisplayApplication::~RTLSDisplayApplication()
     delete _serialConnection;
 
 	delete _viewSettings;
+
+	delete _ancMangeWidget;
 }
 
 RTLSDisplayApplication *RTLSDisplayApplication::instance()

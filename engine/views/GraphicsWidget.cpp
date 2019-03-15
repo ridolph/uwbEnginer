@@ -26,6 +26,7 @@
 #include <QFile>
 #include <QPen>
 
+
 #define PEN_WIDTH (0.04)
 #define ANC_SIZE (0.15)
 #define FONT_SIZE (10)
@@ -36,7 +37,7 @@ GraphicsWidget::GraphicsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->_scene = new QGraphicsScene(this);
+	this->_scene = new QGraphicsScene(this);
 
     ui->graphicsView->setScene(this->_scene);
     ui->graphicsView->scale(1, -1);
@@ -92,6 +93,8 @@ GraphicsWidget::GraphicsWidget(QWidget *parent) :
 
     //anchorTable
     //Anchor ID, x, y, z,
+
+
     QStringList anchorHeader;
     anchorHeader << "Anchor ID" << "X\n(m)" << "Y\n(m)" << "Z\n(m)"
                     << "T0\n(cm)" << "T1\n(cm)" << "T2\n(cm)" << "T3\n(cm)"
@@ -142,6 +145,8 @@ GraphicsWidget::GraphicsWidget(QWidget *parent) :
     _line01 = NULL;
     _line02 = NULL;
     _line12 = NULL;
+
+	
     RTLSDisplayApplication::connectReady(this, "onReady()");
 }
 
@@ -399,6 +404,7 @@ void GraphicsWidget::tagTableChanged(int r, int c)
 
         if(c == ColumnID) //label has changed
         {
+        	printf("tagTableChanged\n");
             QString newLabel = ui->tagTable->item(r,ColumnID)->text();
 
             tag->tagLabelStr = newLabel;
@@ -719,7 +725,7 @@ void GraphicsWidget::addNewTag(quint64 tagId)
     c_h += 0.568034;
     if (c_h >= 1)
         c_h -= 1;
-   c_s += 0.769;
+    c_s += 0.769;
     if (c_s >= 1)
         c_s -= 1;
     c_v += 0.687;
@@ -1778,3 +1784,7 @@ void GraphicsWidget::tagHeartRate(quint64 tagId, quint64 heartRate, quint64 powe
     }
 
 }
+
+
+
+

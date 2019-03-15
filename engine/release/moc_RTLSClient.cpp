@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RTLSClient_t {
-    QByteArrayData data[63];
-    char stringdata0[604];
+    QByteArrayData data[70];
+    char stringdata0[694];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -66,32 +66,39 @@ QT_MOC_LITERAL(33, 251, 2), // "ok"
 QT_MOC_LITERAL(34, 254, 18), // "sendRecoverCmdRsut"
 QT_MOC_LITERAL(35, 273, 14), // "sendGetVerRsut"
 QT_MOC_LITERAL(36, 288, 3), // "ver"
-QT_MOC_LITERAL(37, 292, 10), // "newUdpData"
-QT_MOC_LITERAL(38, 303, 18), // "newTcpOrSerialData"
-QT_MOC_LITERAL(39, 322, 7), // "newData"
-QT_MOC_LITERAL(40, 330, 11), // "QByteArray&"
-QT_MOC_LITERAL(41, 342, 4), // "data"
-QT_MOC_LITERAL(42, 347, 20), // "SendCellOnlineStatus"
-QT_MOC_LITERAL(43, 368, 7), // "uint8_t"
-QT_MOC_LITERAL(44, 376, 9), // "SendAlarm"
-QT_MOC_LITERAL(45, 386, 10), // "ALARM_TYPE"
-QT_MOC_LITERAL(46, 397, 9), // "alarmType"
-QT_MOC_LITERAL(47, 407, 2), // "op"
-QT_MOC_LITERAL(48, 410, 9), // "setServer"
-QT_MOC_LITERAL(49, 420, 12), // "setOutServer"
-QT_MOC_LITERAL(50, 433, 7), // "onReady"
-QT_MOC_LITERAL(51, 441, 11), // "onConnected"
-QT_MOC_LITERAL(52, 453, 4), // "conf"
-QT_MOC_LITERAL(53, 458, 15), // "updateAnchorXYZ"
-QT_MOC_LITERAL(54, 474, 2), // "id"
-QT_MOC_LITERAL(55, 477, 5), // "value"
-QT_MOC_LITERAL(56, 483, 19), // "updateTagCorrection"
-QT_MOC_LITERAL(57, 503, 3), // "tid"
-QT_MOC_LITERAL(58, 507, 16), // "updateAnchorShow"
-QT_MOC_LITERAL(59, 524, 4), // "show"
-QT_MOC_LITERAL(60, 529, 22), // "connectionStateChanged"
-QT_MOC_LITERAL(61, 552, 33), // "SerialConnection::ConnectionS..."
-QT_MOC_LITERAL(62, 586, 17) // "periodCalcProcess"
+QT_MOC_LITERAL(37, 292, 8), // "anchInfo"
+QT_MOC_LITERAL(38, 301, 10), // "newUdpData"
+QT_MOC_LITERAL(39, 312, 18), // "newTcpOrSerialData"
+QT_MOC_LITERAL(40, 331, 7), // "newData"
+QT_MOC_LITERAL(41, 339, 11), // "QByteArray&"
+QT_MOC_LITERAL(42, 351, 4), // "data"
+QT_MOC_LITERAL(43, 356, 20), // "SendCellOnlineStatus"
+QT_MOC_LITERAL(44, 377, 7), // "uint8_t"
+QT_MOC_LITERAL(45, 385, 9), // "SendAlarm"
+QT_MOC_LITERAL(46, 395, 10), // "ALARM_TYPE"
+QT_MOC_LITERAL(47, 406, 9), // "alarmType"
+QT_MOC_LITERAL(48, 416, 2), // "op"
+QT_MOC_LITERAL(49, 419, 9), // "setServer"
+QT_MOC_LITERAL(50, 429, 12), // "setOutServer"
+QT_MOC_LITERAL(51, 442, 13), // "sendAncStatus"
+QT_MOC_LITERAL(52, 456, 17), // "sendAncStatusDown"
+QT_MOC_LITERAL(53, 474, 15), // "addNewAncTagSum"
+QT_MOC_LITERAL(54, 490, 5), // "ancID"
+QT_MOC_LITERAL(55, 496, 5), // "tagID"
+QT_MOC_LITERAL(56, 502, 7), // "onReady"
+QT_MOC_LITERAL(57, 510, 11), // "onConnected"
+QT_MOC_LITERAL(58, 522, 4), // "conf"
+QT_MOC_LITERAL(59, 527, 15), // "updateAnchorXYZ"
+QT_MOC_LITERAL(60, 543, 2), // "id"
+QT_MOC_LITERAL(61, 546, 5), // "value"
+QT_MOC_LITERAL(62, 552, 19), // "updateTagCorrection"
+QT_MOC_LITERAL(63, 572, 3), // "tid"
+QT_MOC_LITERAL(64, 576, 16), // "updateAnchorShow"
+QT_MOC_LITERAL(65, 593, 4), // "show"
+QT_MOC_LITERAL(66, 598, 20), // "sendAncStatusTimeOut"
+QT_MOC_LITERAL(67, 619, 22), // "connectionStateChanged"
+QT_MOC_LITERAL(68, 642, 33), // "SerialConnection::ConnectionS..."
+QT_MOC_LITERAL(69, 676, 17) // "periodCalcProcess"
 
     },
     "RTLSClient\0tagHeartRate\0\0tagId\0rate\0"
@@ -102,13 +109,15 @@ QT_MOC_LITERAL(62, 586, 17) // "periodCalcProcess"
     "dsptcpLog\0str\0updateAncAddr\0aid\0addr\0"
     "port\0closeApp\0sendUpCmdRsut\0ok\0"
     "sendRecoverCmdRsut\0sendGetVerRsut\0ver\0"
-    "newUdpData\0newTcpOrSerialData\0newData\0"
-    "QByteArray&\0data\0SendCellOnlineStatus\0"
+    "anchInfo\0newUdpData\0newTcpOrSerialData\0"
+    "newData\0QByteArray&\0data\0SendCellOnlineStatus\0"
     "uint8_t\0SendAlarm\0ALARM_TYPE\0alarmType\0"
-    "op\0setServer\0setOutServer\0onReady\0"
-    "onConnected\0conf\0updateAnchorXYZ\0id\0"
-    "value\0updateTagCorrection\0tid\0"
-    "updateAnchorShow\0show\0connectionStateChanged\0"
+    "op\0setServer\0setOutServer\0sendAncStatus\0"
+    "sendAncStatusDown\0addNewAncTagSum\0"
+    "ancID\0tagID\0onReady\0onConnected\0conf\0"
+    "updateAnchorXYZ\0id\0value\0updateTagCorrection\0"
+    "tid\0updateAnchorShow\0show\0"
+    "sendAncStatusTimeOut\0connectionStateChanged\0"
     "SerialConnection::ConnectionState\0"
     "periodCalcProcess"
 };
@@ -120,45 +129,50 @@ static const uint qt_meta_data_RTLSClient[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      34,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      15,       // signalCount
+      16,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,  159,    2, 0x06 /* Public */,
-       7,    6,  168,    2, 0x06 /* Public */,
-      12,    4,  181,    2, 0x06 /* Public */,
-      13,    5,  190,    2, 0x06 /* Public */,
-      15,    3,  201,    2, 0x06 /* Public */,
-      17,    1,  208,    2, 0x06 /* Public */,
-      19,    0,  211,    2, 0x06 /* Public */,
-      20,    0,  212,    2, 0x06 /* Public */,
-      21,    3,  213,    2, 0x06 /* Public */,
-      25,    1,  220,    2, 0x06 /* Public */,
-      27,    3,  223,    2, 0x06 /* Public */,
-      31,    0,  230,    2, 0x06 /* Public */,
-      32,    2,  231,    2, 0x06 /* Public */,
-      34,    2,  236,    2, 0x06 /* Public */,
-      35,    2,  241,    2, 0x06 /* Public */,
+       1,    4,  184,    2, 0x06 /* Public */,
+       7,    6,  193,    2, 0x06 /* Public */,
+      12,    4,  206,    2, 0x06 /* Public */,
+      13,    5,  215,    2, 0x06 /* Public */,
+      15,    3,  226,    2, 0x06 /* Public */,
+      17,    1,  233,    2, 0x06 /* Public */,
+      19,    0,  236,    2, 0x06 /* Public */,
+      20,    0,  237,    2, 0x06 /* Public */,
+      21,    3,  238,    2, 0x06 /* Public */,
+      25,    1,  245,    2, 0x06 /* Public */,
+      27,    3,  248,    2, 0x06 /* Public */,
+      31,    0,  255,    2, 0x06 /* Public */,
+      32,    2,  256,    2, 0x06 /* Public */,
+      34,    2,  261,    2, 0x06 /* Public */,
+      35,    2,  266,    2, 0x06 /* Public */,
+      37,    5,  271,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      37,    0,  246,    2, 0x0a /* Public */,
-      38,    0,  247,    2, 0x0a /* Public */,
-      39,    3,  248,    2, 0x0a /* Public */,
-      42,    2,  255,    2, 0x0a /* Public */,
-      44,    3,  260,    2, 0x0a /* Public */,
-      48,    2,  267,    2, 0x0a /* Public */,
-      49,    2,  272,    2, 0x0a /* Public */,
-      50,    0,  277,    2, 0x09 /* Protected */,
-      51,    2,  278,    2, 0x09 /* Protected */,
-      53,    3,  283,    2, 0x09 /* Protected */,
-      56,    3,  290,    2, 0x09 /* Protected */,
-      58,    2,  297,    2, 0x09 /* Protected */,
-      60,    1,  302,    2, 0x08 /* Private */,
-      62,    0,  305,    2, 0x08 /* Private */,
+      38,    0,  282,    2, 0x0a /* Public */,
+      39,    0,  283,    2, 0x0a /* Public */,
+      40,    3,  284,    2, 0x0a /* Public */,
+      43,    2,  291,    2, 0x0a /* Public */,
+      45,    3,  296,    2, 0x0a /* Public */,
+      49,    2,  303,    2, 0x0a /* Public */,
+      50,    2,  308,    2, 0x0a /* Public */,
+      51,    3,  313,    2, 0x0a /* Public */,
+      52,    1,  320,    2, 0x0a /* Public */,
+      53,    2,  323,    2, 0x0a /* Public */,
+      56,    0,  328,    2, 0x09 /* Protected */,
+      57,    2,  329,    2, 0x09 /* Protected */,
+      59,    3,  334,    2, 0x09 /* Protected */,
+      62,    3,  341,    2, 0x09 /* Protected */,
+      64,    2,  348,    2, 0x09 /* Protected */,
+      66,    0,  353,    2, 0x09 /* Protected */,
+      67,    1,  354,    2, 0x08 /* Private */,
+      69,    0,  357,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::ULongLong, QMetaType::ULongLong, QMetaType::ULongLong, QMetaType::ULongLong,    3,    4,    5,    6,
@@ -176,21 +190,26 @@ static const uint qt_meta_data_RTLSClient[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Bool,   28,   33,
     QMetaType::Void, QMetaType::Int, QMetaType::Bool,   28,   33,
     QMetaType::Void, QMetaType::Int, QMetaType::QString,   28,   36,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Double, QMetaType::Double, QMetaType::Double,    2,    2,    2,    2,    2,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 40, QMetaType::QString, QMetaType::LongLong,   41,   29,   30,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 43,    3,   18,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 45, 0x80000000 | 43,    3,   46,   47,
+    QMetaType::Void, 0x80000000 | 41, QMetaType::QString, QMetaType::LongLong,   42,   29,   30,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 44,    3,   18,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 46, 0x80000000 | 44,    3,   47,   48,
     QMetaType::Void, QMetaType::QString, QMetaType::Int,   29,   30,
     QMetaType::Void, QMetaType::QString, QMetaType::Int,   29,   30,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::Int,   28,   29,   30,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   54,   55,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   36,   52,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Double,   54,    9,   55,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   28,   57,   55,
-    QMetaType::Void, QMetaType::Int, QMetaType::Bool,   54,   59,
-    QMetaType::Void, 0x80000000 | 61,    2,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   36,   58,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Double,   60,    9,   61,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   28,   63,   61,
+    QMetaType::Void, QMetaType::Int, QMetaType::Bool,   60,   65,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 68,    2,
     QMetaType::Void,
 
        0        // eod
@@ -217,20 +236,25 @@ void RTLSClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->sendUpCmdRsut((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 13: _t->sendRecoverCmdRsut((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 14: _t->sendGetVerRsut((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 15: _t->newUdpData(); break;
-        case 16: _t->newTcpOrSerialData(); break;
-        case 17: _t->newData((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3]))); break;
-        case 18: _t->SendCellOnlineStatus((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
-        case 19: _t->SendAlarm((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< ALARM_TYPE(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3]))); break;
-        case 20: _t->setServer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 21: _t->setOutServer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 22: _t->onReady(); break;
-        case 23: _t->onConnected((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 24: _t->updateAnchorXYZ((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
-        case 25: _t->updateTagCorrection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 26: _t->updateAnchorShow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 27: _t->connectionStateChanged((*reinterpret_cast< SerialConnection::ConnectionState(*)>(_a[1]))); break;
-        case 28: _t->periodCalcProcess(); break;
+        case 15: _t->anchInfo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4])),(*reinterpret_cast< double(*)>(_a[5]))); break;
+        case 16: _t->newUdpData(); break;
+        case 17: _t->newTcpOrSerialData(); break;
+        case 18: _t->newData((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3]))); break;
+        case 19: _t->SendCellOnlineStatus((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< uint8_t(*)>(_a[2]))); break;
+        case 20: _t->SendAlarm((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< ALARM_TYPE(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3]))); break;
+        case 21: _t->setServer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 22: _t->setOutServer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 23: _t->sendAncStatus((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 24: _t->sendAncStatusDown((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 25: _t->addNewAncTagSum((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 26: _t->onReady(); break;
+        case 27: _t->onConnected((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 28: _t->updateAnchorXYZ((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
+        case 29: _t->updateTagCorrection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 30: _t->updateAnchorShow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 31: _t->sendAncStatusTimeOut(); break;
+        case 32: _t->connectionStateChanged((*reinterpret_cast< SerialConnection::ConnectionState(*)>(_a[1]))); break;
+        case 33: _t->periodCalcProcess(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -341,6 +365,13 @@ void RTLSClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
                 return;
             }
         }
+        {
+            typedef void (RTLSClient::*_t)(int , int , double , double , double );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&RTLSClient::anchInfo)) {
+                *result = 15;
+                return;
+            }
+        }
     }
 }
 
@@ -369,13 +400,13 @@ int RTLSClient::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 34)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 34;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 34)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 29;
+        _id -= 34;
     }
     return _id;
 }
@@ -480,5 +511,12 @@ void RTLSClient::sendGetVerRsut(int _t1, QString _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 14, _a);
+}
+
+// SIGNAL 15
+void RTLSClient::anchInfo(int _t1, int _t2, double _t3, double _t4, double _t5)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)), const_cast<void*>(reinterpret_cast<const void*>(&_t5)) };
+    QMetaObject::activate(this, &staticMetaObject, 15, _a);
 }
 QT_END_MOC_NAMESPACE

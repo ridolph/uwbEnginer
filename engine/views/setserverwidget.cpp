@@ -3,12 +3,21 @@
 #include <QDebug>
 #include <QSettings>
 #include <QMessageBox>
+#include <QTextCodec>
+
+
+QTextCodec *serGbkCode;
+#define SerMtr(s) (serGbkCode->toUnicode(s))
+
 
 setServerWidget::setServerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::setServerWidget)
 {
     ui->setupUi(this);
+
+	/* 新增 防止有时候出现显示中文乱码 */
+    serGbkCode = QTextCodec::codecForName("GB2312");//你完全可以改成GB18080等编码
 
     QRegExp regx;
     QRegExpValidator *pExpValidator;
@@ -22,7 +31,7 @@ setServerWidget::setServerWidget(QWidget *parent) :
     ui->addrEdit->setValidator(pExpValidator);
 	ui->addrEdit_2->setValidator(pExpValidator);
 
-    this->setWindowTitle("设置tcp服务器");
+    this->setWindowTitle(SerMtr("设置tcp服务器"));
     this->setFixedSize(500,400);
     readSetting();
     connect(ui->cancelBtn, SIGNAL(clicked(bool)), this, SLOT(close()));

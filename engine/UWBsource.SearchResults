@@ -1,348 +1,97 @@
----- connect Matches (367 in 44 files) ----
-AncManageWidget.cpp (views):	connect(_sendDataTimer, SIGNAL(timeout()), this, SLOT(senDataTimeout()));
-AncManageWidget.cpp (views):    connect(_setUpgradeServerAction,SIGNAL(triggered(bool)), _ancUpSrvConfigW, SLOT(readSetting()));
-AncManageWidget.cpp (views):    connect(_setUpgradeServerAction,SIGNAL(triggered(bool)), this, SLOT(showUpSrvW()));
-AncManageWidget.cpp (views):    connect(_ancUpSrvConfigW, SIGNAL(verChanged(QString)), this, SLOT(verChanged(QString)));
-AncManageWidget.cpp (views):    connect(_periodTimer, SIGNAL(timeout()), this, SLOT(periodProcess()));
-AncManageWidget.cpp (views):    connect(_startUpTimer, SIGNAL(timeout()), this, SLOT(startUpTimeout()));
-AncManageWidget.cpp (views):    connect(_reportStaTimer, SIGNAL(timeout()), this, SLOT(reportStaTimeout()));
-AncManageWidget.cpp (views):    connect(ui->ancManageTab, SIGNAL(cellClicked(int, int)), this, SLOT(cellClicked(int,int)));
-AncManageWidget.cpp (views):    //connect(cli, SIGNAL(sendUpCmdRsut(int, bool)), this, SLOT(sendUpCmdRsut(int, bool)));
-AncManageWidget.cpp (views):    //connect(cli, SIGNAL(sendRecoverCmdRsut(int, bool)), this, SLOT(sendRecoverCmdRsut(int, bool)));
-AncManageWidget.cpp (views):    //connect(cli, SIGNAL(sendGetVerRsut(int,QString)), this, SLOT(sendGetVerRsut(int,QString)));
-AncManageWidget.cpp (views):    //connect(cli, SIGNAL(sendUpCmdRsut(int, bool)), this, SLOT(sendUpCmdRsut(int, bool)));
-AncManageWidget.cpp (views):   // connect(cli, SIGNAL(sendRecoverCmdRsut(int, bool)), this, SLOT(sendRecoverCmdRsut(int, bool)));
-AncManageWidget.cpp (views):    //connect(cli, SIGNAL(sendGetVerRsut(int,QString)), this, SLOT(sendGetVerRsut(int,QString)));
-cJSON.h (uwb_comm):need to be released. With recurse!=0, it will duplicate any children connected to the item.
-Connectionwidget.cpp (views):#include "connectionwidget.h"
-Connectionwidget.cpp (views):#include "ui_connectionwidget.h"
-Connectionwidget.cpp (views):    QObject::connect(ui->connect_pb, SIGNAL(clicked()), SLOT(connectButtonClicked()));  //add a function for the Connect button click
-Connectionwidget.cpp (views):    ui->connect_pb->setEnabled(true);
-Connectionwidget.cpp (views):    ui->connect_pb->setEnabled(false);
-Connectionwidget.cpp (views):    RTLSDisplayApplication::connectReady(this, "onReady()");
-Connectionwidget.cpp (views):    QObject::connect(RTLSDisplayApplication::serialConnection(), SIGNAL(connectionStateChanged(SerialConnection::ConnectionState)),
-Connectionwidget.cpp (views):                     this, SLOT(connectionStateChanged(SerialConnection::ConnectionState)));
-Connectionwidget.cpp (views):    connectionStateChanged(SerialConnection::Disconnected);
-Connectionwidget.cpp (views):        ui->connect_pb->setEnabled(false);
-Connectionwidget.cpp (views):        connectionStateChanged(SerialConnection::Disconnected);
-Connectionwidget.cpp (views):        RTLSDisplayApplication::mainWindow()->connectionStateChanged(SerialConnection::Disconnected);
-Connectionwidget.cpp (views):        //connect to the first TREK device
-Connectionwidget.cpp (views):    ui->connect_pb->setEnabled(false);
-Connectionwidget.cpp (views):void ConnectionWidget::connectButtonClicked()
-Connectionwidget.cpp (views):    case SerialConnection::Disconnected:
-Connectionwidget.cpp (views):void ConnectionWidget::connectionStateChanged(SerialConnection::ConnectionState state)
-Connectionwidget.cpp (views):    case SerialConnection::Disconnected:
-Connectionwidget.cpp (views):        ui->connect_pb->setText("Connect");
-Connectionwidget.cpp (views):        ui->connect_pb->setText("Cancel");
-Connectionwidget.cpp (views):        ui->connect_pb->setText("Disconnect");
-Connectionwidget.cpp (views):    bool enabled = (state == SerialConnection::Disconnected || state == SerialConnection::ConnectionFailed) ? true : false;
-Connectionwidget.h (views):    void connectionStateChanged(SerialConnection::ConnectionState state);
-Connectionwidget.h (views):    void connectButtonClicked();
-GraphicsView.cpp (views):    RTLSDisplayApplication::connectReady(this, "onReady()");
-GraphicsView.cpp (views):    QObject::connect(RTLSDisplayApplication::viewSettings(), SIGNAL(floorplanChanged()), this, SLOT(floorplanChanged()));
-GraphicsView.cpp (views):            QObject::connect(t, SIGNAL(done()), t, SLOT(deleteLater())); // Let the tool self-desruct at the end.
-GraphicsView.cpp (views):        QObject::disconnect(_tool, SIGNAL(done()), this, SLOT(toolDone()));
-GraphicsView.cpp (views):        QObject::connect(_tool, SIGNAL(done()), this, SLOT(toolDone()));
-GraphicsView.cpp (views):        QObject::connect(_tool, SIGNAL(destroyed()), this, SLOT(toolDestroyed()));
-GraphicsView.cpp (views):    QObject::disconnect(_tool, SIGNAL(done()), this, SLOT(toolDone()));
-GraphicsView.cpp (views):    QObject::disconnect(_tool, SIGNAL(destroyed()), this, SLOT(toolDestroyed()));
-GraphicsWidget.cpp (views):    RTLSDisplayApplication::connectReady(this, "onReady()");
-GraphicsWidget.cpp (views):	QObject::connect(ui->tagTable, SIGNAL(cellChanged(int, int)), this, SLOT(tagTableChanged(int, int)));
-GraphicsWidget.cpp (views):    QObject::connect(ui->anchorTable, SIGNAL(cellChanged(int, int)), this, SLOT(anchorTableChanged(int, int)));
-GraphicsWidget.cpp (views):    QObject::connect(ui->tagTable, SIGNAL(cellClicked(int, int)), this, SLOT(tagTableClicked(int, int)));
-GraphicsWidget.cpp (views):    QObject::connect(ui->anchorTable, SIGNAL(cellClicked(int, int)), this, SLOT(anchorTableClicked(int, int)));
-GraphicsWidget.cpp (views):    QObject::connect(ui->tagTable, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
-GraphicsWidget.cpp (views):    QObject::connect(ui->anchorTable, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChangedAnc()));
-GraphicsWidget.cpp (views):    QObject::connect(this, SIGNAL(centerAt(double,double)), graphicsView(), SLOT(centerAt(double, double)));
-GraphicsWidget.cpp (views):    QObject::connect(this, SIGNAL(centerRect(QRectF)), graphicsView(), SLOT(centerRect(QRectF)));
-Mainwindow.cpp (views):#include "connectionwidget.h"
-Mainwindow.cpp (views):#include "serialconnection.h"
-Mainwindow.cpp (views):    //connect(anchorConfigAction, SIGNAL(triggered()), SLOT(onAnchorConfigAction()));
-Mainwindow.cpp (views):    //add connection widget to the main window
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::instance(), SIGNAL(aboutToQuit()), SLOT(saveSettings()));
-Mainwindow.cpp (views):    connect(ui->actionAbout, SIGNAL(triggered()), SLOT(onAboutAction()));
-Mainwindow.cpp (views):    connect(ui->actionConfigServer, SIGNAL(triggered(bool)),this, SLOT(onConfigServerAction()));
-Mainwindow.cpp (views):    connect(ui->actionScanConfig, SIGNAL(triggered(bool)),this, SLOT(onScanConfigAction()));
-Mainwindow.cpp (views):    connect(ui->actionTagManage, SIGNAL(triggered(bool)), this, SLOT(onTagManageAction()));
-Mainwindow.cpp (views):    connect(ui->minimap_dw->toggleViewAction(), SIGNAL(triggered()), SLOT(onMiniMapView()));
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::serialConnection(), SIGNAL(connectionStateChanged(SerialConnection::ConnectionState)),
-Mainwindow.cpp (views):                     this, SLOT(connectionStateChanged(SerialConnection::ConnectionState)));
-Mainwindow.cpp (views):    RTLSDisplayApplication::connectReady(this, "onReady()");
-Mainwindow.cpp (views):    connect(_tcpServer, &QTcpServer::newConnection, this, &MainWindow::tcpNewConnection);
-Mainwindow.cpp (views):    QObject::connect(_udpSocket, &QUdpSocket::readyRead, RTLSDisplayApplication::client(), &RTLSClient::newUdpData);
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::client(), &RTLSClient::updateAncAddr, _tagManageW, &AncManageWidget::updateAncAddr);
-Mainwindow.cpp (views):    QObject::connect(graphicsWidget(), SIGNAL(setTagHistory(int)), viewSettingsWidget(), SLOT(setTagHistory(int)));
-Mainwindow.cpp (views):    QObject::connect(viewSettingsWidget(), SIGNAL(udpPortChanged(void)), this, SLOT(udpPortChanged(void)));
-Mainwindow.cpp (views):    QObject::connect(viewSettingsWidget(), SIGNAL(saveViewSettings(void)), this, SLOT(saveViewConfigSettings(void)));
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::client()->uwbTcpClient(), &UWB_TcpClient::startUpdate, _tagManageW, &AncManageWidget::startUpdate);
-Mainwindow.cpp (views):    QObject::connect( _tagManageW, &AncManageWidget::sendUpResp, RTLSDisplayApplication::client()->uwbTcpClient(), &UWB_TcpClient::sendUpResp);
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::client(), &RTLSClient::sendUpCmdRsut, _tagManageW, &AncManageWidget::sendUpCmdRsut);
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::client(), &RTLSClient::sendRecoverCmdRsut, _tagManageW, &AncManageWidget::sendRecoverCmdRsut);
-Mainwindow.cpp (views):    QObject::connect(RTLSDisplayApplication::client(), &RTLSClient::sendGetVerRsut, _tagManageW, &AncManageWidget::sendGetVerRsut);
-Mainwindow.cpp (views):            //QMessageBox::critical(NULL, tr("COM Error"), QString("Cannot open/connect to COM port.\nPlease make sure TREK device is connected to PC."));
-Mainwindow.cpp (views):            reply = QMessageBox::warning(this, tr("COM Error"), "Cannot open/connect to COM port.\n"
-Mainwindow.cpp (views):                                          "Please make sure TREK device is connected to PC.\n\n "
-Mainwindow.cpp (views):    qDebug() << "A new TCP connection connected";
-Mainwindow.cpp (views):    //QObject::connect(_tcpSocket, &QTcpSocket::readyRead, this, &MainWindow::socket_Read_Data);
-Mainwindow.cpp (views):    RTLSDisplayApplication::client()->is_socket_connected = true;
-Mainwindow.cpp (views):    QObject::connect(_tcpSocket, &QTcpSocket::readyRead, RTLSDisplayApplication::client(), &RTLSClient::newTcpOrSerialData);
-Mainwindow.cpp (views):    QObject::connect(_tcpSocket, &QTcpSocket::disconnected, this, &MainWindow::socket_Disconnected);
-Mainwindow.cpp (views):void MainWindow::socket_Disconnected()
-Mainwindow.cpp (views):    qDebug() << "Socket disconnected";
-Mainwindow.cpp (views):void MainWindow::connectionStateChanged(SerialConnection::ConnectionState state)
-Mainwindow.cpp (views):        case SerialConnection::Disconnected:
-Mainwindow.cpp (views):            statusBar()->showMessage("Connection disconnected.");
-Mainwindow.cpp (views):    _udpSocket->disconnectFromHost();
-Mainwindow.h (views):#include "serialconnection.h"
-Mainwindow.h (views):    void connectionStateChanged(SerialConnection::ConnectionState);
-Mainwindow.h (views):    void socket_Disconnected();
-MinimapView.cpp (views):    RTLSDisplayApplication::connectReady(this, "onReady()");
-MinimapView.cpp (views):    QObject::connect(RTLSDisplayApplication::viewSettings(), SIGNAL(floorplanChanged()), this, SLOT(floorplanChanged()));
-MinimapView.cpp (views):    QObject::connect(RTLSDisplayApplication::graphicsView(), SIGNAL(visibleRectChanged(QRectF)), this, SLOT(visibleRectChanged()));
-Moc_connectionwidget.cpp (release):** Meta object code from reading C++ file 'connectionwidget.h'
-Moc_connectionwidget.cpp (release):#include "../views/connectionwidget.h"
-Moc_connectionwidget.cpp (release):#error "The header file 'connectionwidget.h' doesn't include <QObject>."
-Moc_connectionwidget.cpp (release):QT_MOC_LITERAL(1, 17, 22), // "connectionStateChanged"
-Moc_connectionwidget.cpp (release):QT_MOC_LITERAL(8, 118, 20) // "connectButtonClicked"
-Moc_connectionwidget.cpp (release):    "ConnectionWidget\0connectionStateChanged\0"
-Moc_connectionwidget.cpp (release):    "onReady\0connectButtonClicked"
-Moc_connectionwidget.cpp (release):        case 0: _t->connectionStateChanged((*reinterpret_cast< SerialConnection::ConnectionState(*)>(_a[1]))); break;
-Moc_connectionwidget.cpp (release):        case 4: _t->connectButtonClicked(); break;
-Moc_mainwindow.cpp (release):QT_MOC_LITERAL(1, 11, 22), // "connectionStateChanged"
-Moc_mainwindow.cpp (release):QT_MOC_LITERAL(9, 149, 19), // "socket_Disconnected"
-Moc_mainwindow.cpp (release):    "MainWindow\0connectionStateChanged\0\0"
-Moc_mainwindow.cpp (release):    "socket_Disconnected\0loadSettings\0"
-Moc_mainwindow.cpp (release):        case 0: _t->connectionStateChanged((*reinterpret_cast< SerialConnection::ConnectionState(*)>(_a[1]))); break;
-Moc_mainwindow.cpp (release):        case 6: _t->socket_Disconnected(); break;
-moc_RTLSClient.cpp (release):QT_MOC_LITERAL(60, 529, 22), // "connectionStateChanged"
-moc_RTLSClient.cpp (release):    "updateAnchorShow\0show\0connectionStateChanged\0"
-moc_RTLSClient.cpp (release):        case 27: _t->connectionStateChanged((*reinterpret_cast< SerialConnection::ConnectionState(*)>(_a[1]))); break;
-moc_SerialConnection.cpp (release):QT_MOC_LITERAL(8, 79, 22), // "connectionStateChanged"
-moc_SerialConnection.cpp (release):    "connectionStateChanged\0"
-moc_SerialConnection.cpp (release):        case 5: _t->connectionStateChanged((*reinterpret_cast< SerialConnection::ConnectionState(*)>(_a[1]))); break;
-moc_SerialConnection.cpp (release):            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SerialConnection::connectionStateChanged)) {
-moc_SerialConnection.cpp (release):void SerialConnection::connectionStateChanged(SerialConnection::ConnectionState _t1)
-moc_UpdateClient.cpp (release):QT_MOC_LITERAL(8, 73, 9), // "connectOk"
-moc_UpdateClient.cpp (release):QT_MOC_LITERAL(12, 109, 12), // "disconnected"
-moc_UpdateClient.cpp (release):    "connectOk\0readMessage\0handleMsg\0msg\0"
-moc_UpdateClient.cpp (release):    "disconnected\0printError\0"
-moc_UpdateClient.cpp (release):        case 3: _t->connectOk(); break;
-moc_UpdateClient.cpp (release):        case 6: _t->disconnected(); break;
-moc_UWB_TcpClient.cpp (release):QT_MOC_LITERAL(11, 90, 9), // "connectOk"
-moc_UWB_TcpClient.cpp (release):QT_MOC_LITERAL(15, 126, 12), // "disconnected"
-moc_UWB_TcpClient.cpp (release):    "succBuf\0succCount\0connectOk\0readMessage\0"
-moc_UWB_TcpClient.cpp (release):    "msgHandle\0msg\0disconnected\0printError\0"
-moc_UWB_TcpClient.cpp (release):        case 2: _t->connectOk(); break;
-moc_UWB_TcpClient.cpp (release):        case 5: _t->disconnected(); break;
-moc_UWB_WebSocket.cpp (release):QT_MOC_LITERAL(7, 79, 18) // "socketDisconnected"
-moc_UWB_WebSocket.cpp (release):    "socketDisconnected"
-moc_UWB_WebSocket.cpp (release):        case 3: _t->socketDisconnected(); break;
-QPropertyModel.cpp (util):    connectToPropertyNotifySignals();
-QPropertyModel.cpp (util):void QPropertyModel::connectToPropertyNotifySignals()
-QPropertyModel.cpp (util):        connect(_source, props[index].notifySignal(),
-QPropertyModel.h (util):    void connectToPropertyNotifySignals();
-RTLSClient.cpp (network):*        Constructor, it consumes the data received over the COM port connection and sends the
-RTLSClient.cpp (network):	connect(this, SIGNAL(sendTagStatusSignal(int , int , int )), this->_tcpClient, SLOT(sendTagStatus(int, int, int )));
-RTLSClient.cpp (network):    RTLSDisplayApplication::connectReady(this, "onReady()");
-RTLSClient.cpp (network):    connect(scanThread,SIGNAL(SendCellOnlineStatus(int,uint8_t)),this,SLOT(SendCellOnlineStatus(int,uint8_t)), Qt::BlockingQueuedConnection);
-RTLSClient.cpp (network):    connect(scanThread,SIGNAL(SendAlarm(int, ALARM_TYPE, uint8_t)),this, SLOT(SendAlarm(int, ALARM_TYPE, uint8_t)), Qt::BlockingQueuedConnection);
-RTLSClient.cpp (network):    connect(_periodCalcTimer, SIGNAL(timeout()), this, SLOT(periodCalcProcess()));
-RTLSClient.cpp (network):    QObject::connect(RTLSDisplayApplication::serialConnection(), SIGNAL(serialOpened(QString, QString)),
-RTLSClient.cpp (network):    //get pointer to Serial connection serial port pointer
-RTLSClient.cpp (network):    is_socket_connected = false;
-RTLSClient.cpp (network):    connect(_serial, SIGNAL(readyRead()), this, SLOT(newTcpOrSerialData()));
-RTLSClient.cpp (network):    if (is_socket_connected)
-RTLSClient.cpp (network):        //notify the user if connected to a tag or an anchor
-RTLSClient.cpp (network):            if(c == 'a') //we are connected to an anchor id = i
-RTLSClient.cpp (network):            if(c == 't') //we are connected to a tag id = i
-RTLSClient.cpp (network):            if(c == 'l') //we are connected to a listener id = i
-RTLSClient.cpp (network):void RTLSClient::connectionStateChanged(SerialConnection::ConnectionState state)
-RTLSClient.cpp (network):    qDebug() << "RTLSClient::connectionStateChanged " << state;
-RTLSClient.cpp (network):    if(state == SerialConnection::Disconnected) //disconnect from Serial Port
-RTLSClient.cpp (network):            disconnect(_serial, SIGNAL(readyRead()), this, SLOT(newTcpOrSerialData()));
-RTLSClient.h (network):    void connectionStateChanged(SerialConnection::ConnectionState);
-RTLSClient.h (network):    bool is_socket_connected;
-RTLSDisplayApplication.cpp:*        the _serialConnection is used for managing the COM port connection
-RTLSDisplayApplication.cpp:*        the _client consumes the data received over the COM port connection and sends the
-RTLSDisplayApplication.cpp:    QObject::connect(_timer,SIGNAL(timeout()), this, SLOT(updateTime()));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(tagHeartRate(quint64, quint64, quint64,quint64)), graphicsWidget(), SLOT(tagHeartRate(quint64,quint64,quint64,quint64)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(anchPos(quint64,double,double,double,bool,bool)), graphicsWidget(), SLOT(anchPos(quint64,double,double,double,bool, bool)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(tagPos(quint64,double,double,double)), graphicsWidget(), SLOT(tagPos(quint64,double,double,double)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(tagStats(quint64,double,double,double,double)), graphicsWidget(), SLOT(tagStats(quint64,double,double,double,double)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(tagRange(quint64,quint64,double)), graphicsWidget(), SLOT(tagRange(quint64,quint64,double)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(statusBarMessage(QString)), _mainWindow, SLOT(statusBarMessage(QString)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(centerOnAnchors(void)), graphicsWidget(), SLOT(centerOnAnchors(void)));
-RTLSDisplayApplication.cpp:    QObject::connect(_serialConnection, SIGNAL(clearTags()), graphicsWidget(), SLOT(clearTags()));
-RTLSDisplayApplication.cpp:    QObject::connect(_serialConnection, SIGNAL(statusBarMessage(QString)), _mainWindow, SLOT(statusBarMessage(QString)));
-RTLSDisplayApplication.cpp:    QObject::connect(_serialConnection, SIGNAL(connectionStateChanged(SerialConnection::ConnectionState)), _client, SLOT(connectionStateChanged(SerialConnection::ConnectionState)));
-RTLSDisplayApplication.cpp:    QObject::connect(graphicsWidget(), SIGNAL(updateAnchorXYZ(int, int, double)), _client, SLOT(updateAnchorXYZ(int, int, double)));
-RTLSDisplayApplication.cpp:    QObject::connect(graphicsWidget(), SIGNAL(updateTagCorrection(int, int, int)), _client, SLOT(updateTagCorrection(int, int, int)));
-RTLSDisplayApplication.cpp:    QObject::connect(graphicsWidget(), SIGNAL(updateAnchorShow(int,bool)),_client, SLOT(updateAnchorShow(int,bool)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(ancRanges(int, int, int)), graphicsWidget(), SLOT(ancRanges(int, int, int)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(dsptcpLog(QString)), mainWindow()->viewSettingsWidget(), SLOT(dsptcpLog(QString)));
-RTLSDisplayApplication.cpp:    QObject::connect(serverConfigWidget(),SIGNAL(setServer(QString,int)), _client,SLOT(setServer(QString,int)));
-RTLSDisplayApplication.cpp:    QObject::connect(serverConfigWidget(),SIGNAL(setOutServer(QString,int)), _client,SLOT(setOutServer(QString,int)));
-RTLSDisplayApplication.cpp:    QObject::connect(_client, SIGNAL(closeApp()), this, SLOT(closeApp()));
-RTLSDisplayApplication.cpp:void RTLSDisplayApplication::connectReady(QObject *receiver, const char *member, Qt::ConnectionType type)
-RTLSDisplayApplication.cpp:    // Either call the method or connect it to the ready signal
-RTLSDisplayApplication.cpp:        QObject::connect(instance(), QMetaMethod::fromSignal(&RTLSDisplayApplication::ready), receiver, method, type);
-RTLSDisplayApplication.h: * connectReady() may be used to run that specific function once all the resources are allocated.
-RTLSDisplayApplication.h: * The slot passed as the second argument will either run immediately if setup is already done, or connected to a signal that will be emitted once initialization is complete.
-RTLSDisplayApplication.h: * RTLSDisplayApplication::connectReady(this, "onReady()");
-RTLSDisplayApplication.h:     * The function is either called reight away if initialization is already done, or connected to the ready() signal.
-RTLSDisplayApplication.h:    static void connectReady(QObject *receiver, const char *member, Qt::ConnectionType type = Qt::AutoConnection);
-RTLSDisplayApplication.h:     * Because this signal is only emitted once at application startup, the connectReady() should be used instead.
-SerialConnection.cpp (network):    connect(_serial, SIGNAL(error(QSerialPort::SerialPortError)), this,
-SerialConnection.cpp (network):    connect(_serial, SIGNAL(readyRead()), this, SLOT(readData()));
-SerialConnection.cpp (network):    emit statusBarMessage(tr("COM port Disconnected"));
-SerialConnection.cpp (network):    emit connectionStateChanged(Disconnected);
-SerialConnection.cpp (network):    emit connectionStateChanged(Connected);
-SerialConnection.cpp (network):    emit connectionStateChanged(ConnectionFailed);
-SerialConnection.cpp (network):            _connectionVersion = QString::fromLocal8Bit(instanceVer, INST_VERSION_LEN);
-SerialConnection.cpp (network):            qDebug() << _conncectionConfig <<  _connectionVersion << instanceConf;
-SerialConnection.cpp (network):            emit serialOpened(_connectionVersion, _conncectionConfig);
-SerialConnection.h (network):*        it is used for managing the COM port connection.
-SerialConnection.h (network):        Disconnected = 0,
-SerialConnection.h (network):    void findSerialDevices(); //find any tags or anchors that are connected to the PC
-SerialConnection.h (network):    QStringList portsList(); //return list of available serial ports (list of ports with tag/anchor connected)
-SerialConnection.h (network):    void connectionStateChanged(SerialConnection::ConnectionState);
-SerialConnection.h (network):    QString _connectionVersion;
-setScanConfigWidget.cpp (views):    connect(ui->locCorrectEnableBox, SIGNAL(stateChanged(int)), this, SLOT(locCorrectProcess()));
-Setserverwidget.cpp (views):    connect(ui->cancelBtn, SIGNAL(clicked(bool)), this, SLOT(close()));
-ui_AncManageWidget.h:        QMetaObject::connectSlotsByName(AncManageWidget);
-ui_AncTcpSrvPortConfigWidget.h:        QMetaObject::connectSlotsByName(AncTcpSrvPortConfigWidget);
-ui_AncUpSrvConfigWidget.h:        QMetaObject::connectSlotsByName(AncUpSrvConfigWidget);
-Ui_connectionwidget.h:** Form generated from reading UI file 'connectionwidget.ui'
-Ui_connectionwidget.h:    QPushButton *connect_pb;
-Ui_connectionwidget.h:        connect_pb = new QPushButton(ConnectionWidget);
-Ui_connectionwidget.h:        connect_pb->setObjectName(QStringLiteral("connect_pb"));
-Ui_connectionwidget.h:        gridLayout->addWidget(connect_pb, 1, 2, 1, 1);
-Ui_connectionwidget.h:        QMetaObject::connectSlotsByName(ConnectionWidget);
-Ui_connectionwidget.h:        connect_pb->setText(QApplication::translate("ConnectionWidget", "Connect", 0));
-ui_GraphicsWidget.h:        QMetaObject::connectSlotsByName(GraphicsWidget);
-Ui_mainwindow.h:        QMetaObject::connectSlotsByName(MainWindow);
-ui_setScanConfigWidget.h:        QMetaObject::connectSlotsByName(setScanConfigWidget);
-Ui_setserverwidget.h:        QMetaObject::connectSlotsByName(setServerWidget);
-ui_ViewSettingsWidget.h:        QMetaObject::connectSlotsByName(ViewSettingsWidget);
-UpdateClient.cpp (uwb_comm):    _connectTimeLimit = 5;
-UpdateClient.cpp (uwb_comm):    _connectCount = 0;
-UpdateClient.cpp (uwb_comm):    _connectFlag = false;
-UpdateClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(connected()),this,SLOT(connectOk()));
-UpdateClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(readyRead()),this,SLOT(readMessage()));
-UpdateClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(disconnected()),this,SLOT(disconnected()));
-UpdateClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(printError(QAbstractSocket::SocketError)));
-UpdateClient.cpp (uwb_comm):    connect(_connTimer,SIGNAL(timeout()),this, SLOT(connTimeout()));
-UpdateClient.cpp (uwb_comm):    connect(_rspTimer, SIGNAL(timeout()), this, SLOT(rspTimeout()));
-UpdateClient.cpp (uwb_comm):    _tcpClient->connectToHost(_tcpServerAddr, _tcpServerPort);
-UpdateClient.cpp (uwb_comm):    _connectCount = 0;
-UpdateClient.cpp (uwb_comm):void UpdateClient::connectOk()
-UpdateClient.cpp (uwb_comm):    _connectFlag = true;
-UpdateClient.cpp (uwb_comm):    _connectCount = 0;
-UpdateClient.cpp (uwb_comm):    qDebug()<<"updateClient connect ok";
-UpdateClient.cpp (uwb_comm):    if(_connectCount >= _connectTimeLimit)
-UpdateClient.cpp (uwb_comm):        _connectCount = 0;
-UpdateClient.cpp (uwb_comm):    if(false == _connectFlag)
-UpdateClient.cpp (uwb_comm):        _tcpClient->connectToHost(_tcpServerAddr,_tcpServerPort);
-UpdateClient.cpp (uwb_comm):        _connectCount++;
-UpdateClient.cpp (uwb_comm):    if(_connectFlag == false)
-UpdateClient.cpp (uwb_comm):    if(_connectFlag == false)
-UpdateClient.cpp (uwb_comm):    qDebug()<<"up client start get ver"<< "_cnflag"<<_connectFlag;
-UpdateClient.cpp (uwb_comm):    if(_connectFlag == false)
-UpdateClient.cpp (uwb_comm):    _connectFlag = false;
-UpdateClient.cpp (uwb_comm):void UpdateClient::disconnected()
-UpdateClient.cpp (uwb_comm):    _connectFlag = false;
-UpdateClient.cpp (uwb_comm):    qDebug()<<"updateClient disconnect";
-UpdateClient.cpp (uwb_comm):    _connectFlag = false;
-UpdateClient.h (uwb_comm):    void connectOk();
-UpdateClient.h (uwb_comm):    void disconnected();
-UpdateClient.h (uwb_comm):    bool _connectFlag;
-UpdateClient.h (uwb_comm):    int _connectTimeLimit;
-UpdateClient.h (uwb_comm):    int _connectCount;
-Uwb_http.cpp (uwb_comm):    QObject::connect(&_networkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(serviceRequestFinished(QNetworkReply*)));
-Uwb_http.cpp (uwb_comm):    _networkAccessManager.disconnect();
-UWB_TcpClient.cpp (uwb_comm):    _connectFlag = false;
-UWB_TcpClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(connected()),this,SLOT(connectOk()));
-UWB_TcpClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(readyRead()),this,SLOT(readMessage()));
-UWB_TcpClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(disconnected()),this,SLOT(disconnected()));
-UWB_TcpClient.cpp (uwb_comm):    connect(_tcpClient,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(printError(QAbstractSocket::SocketError)));
-UWB_TcpClient.cpp (uwb_comm):    connect(_pingTimer,SIGNAL(timeout()),this, SLOT(pingTimeout()));
-UWB_TcpClient.cpp (uwb_comm):    connect(_connTimer,SIGNAL(timeout()),this, SLOT(connTimeout()));
-UWB_TcpClient.cpp (uwb_comm):    connect(_pingRspTimer, SIGNAL(timeout()), this, SLOT(pingRspTimeout()));
-UWB_TcpClient.cpp (uwb_comm):    _tcpClient->connectToHost(_serverAddr,_serverPort);
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.cpp (uwb_comm):        _tcpClient->connectToHost(_serverAddr,_serverPort);
-UWB_TcpClient.cpp (uwb_comm):    _connectFlag = false;
-UWB_TcpClient.cpp (uwb_comm):void UWB_TcpClient::connectOk()
-UWB_TcpClient.cpp (uwb_comm):    _connectFlag = true;
-UWB_TcpClient.cpp (uwb_comm):    qDebug()<<"tcpclient connect ok";
-UWB_TcpClient.cpp (uwb_comm):    _connectFlag = false;
-UWB_TcpClient.cpp (uwb_comm):    _tcpClient->connectToHost(_serverAddr,_serverPort);
-UWB_TcpClient.cpp (uwb_comm):void UWB_TcpClient::disconnected()
-UWB_TcpClient.cpp (uwb_comm):    _connectFlag = false;
-UWB_TcpClient.cpp (uwb_comm):    qDebug()<<"tcpclient disconnect";
-UWB_TcpClient.cpp (uwb_comm):    _connectFlag = false;
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.cpp (uwb_comm):    if(false == _connectFlag)
-UWB_TcpClient.h (uwb_comm):    void connectOk();
-UWB_TcpClient.h (uwb_comm):    void disconnected();
-UWB_TcpClient.h (uwb_comm):    bool _connectFlag;
-UWB_WebSocket.cpp (uwb_comm):        connect(m_pWebSocketServer, &QWebSocketServer::newConnection,
-UWB_WebSocket.cpp (uwb_comm):        connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &UWB_WebSocketServer::closed);
-UWB_WebSocket.cpp (uwb_comm):    qDebug() << "New WebSocket connection connected";
-UWB_WebSocket.cpp (uwb_comm):    connect(pSocket, &QWebSocket::textMessageReceived, this, &UWB_WebSocketServer::processTextMessage);
-UWB_WebSocket.cpp (uwb_comm):    connect(pSocket, &QWebSocket::disconnected, this, &UWB_WebSocketServer::socketDisconnected);
-UWB_WebSocket.cpp (uwb_comm):void UWB_WebSocketServer::socketDisconnected()
-UWB_WebSocket.cpp (uwb_comm):	qDebug() << "socketDisconnected:" << pClient;
-UWB_WebSocket.h (uwb_comm):    uint8_t connect_flag;
-UWB_WebSocket.h (uwb_comm):    void socketDisconnected();
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(gridWidthChanged(double)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(gridHeightChanged(double)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanFlipXChanged(bool)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanFlipYChanged(bool)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanXScaleChanged(double)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanYScaleChanged(double)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(showGridChanged(bool)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(showOriginChanged(bool)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanXOffsetChanged(double)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanYOffsetChanged(double)), this, SLOT(viewSettingsChanged()));
-ViewSettings.cpp (models):    QObject::connect(this, SIGNAL(floorplanPixmapChanged()), this, SLOT(viewSettingsChanged()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->klmanfilterBox, SIGNAL(stateChanged(int)), this, SLOT(klmanftChanged()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->vecBox, SIGNAL(currentIndexChanged(int)), this, SLOT(vecChanged(int)));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->floorplanOpen_pb, SIGNAL(clicked()), this, SLOT(floorplanOpenClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->scaleX_pb, SIGNAL(clicked()), this, SLOT(scaleClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->scaleY_pb, SIGNAL(clicked()), this, SLOT(scaleClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->origin_pb, SIGNAL(clicked()), this, SLOT(originClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->saveFP, SIGNAL(clicked()), this, SLOT(saveFPClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->gridShow, SIGNAL(clicked()), this, SLOT(gridShowClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showOrigin, SIGNAL(clicked()), this, SLOT(originShowClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showTagHistory, SIGNAL(clicked()), this, SLOT(tagHistoryShowClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showGeoFencingMode, SIGNAL(clicked()), this, SLOT(showGeoFencingModeClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showNavigationMode, SIGNAL(clicked()), this, SLOT(showNavigationModeClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->useAutoPos, SIGNAL(clicked()), this, SLOT(useAutoPosClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showTagTable, SIGNAL(clicked()), this, SLOT(tagAncTableShowClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showAnchorTable, SIGNAL(clicked()), this, SLOT(tagAncTableShowClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showAnchorTagCorrectionTable, SIGNAL(clicked()), this, SLOT(tagAncTableShowClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->zone1, SIGNAL(editingFinished()), this, SLOT(zone1EditFinished()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->zone2, SIGNAL(editingFinished()), this, SLOT(zone2EditFinished()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->zone1, SIGNAL(valueChanged(double)), this, SLOT(zone1ValueChanged(double)));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->zone2, SIGNAL(valueChanged(double)), this, SLOT(zone2ValueChanged(double)));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->inAlarm, SIGNAL(clicked()), this, SLOT(alarmSetClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->outAlarm, SIGNAL(clicked()), this, SLOT(alarmSetClicked()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->tagHistoryN, SIGNAL(valueChanged(int)), this, SLOT(tagHistoryNumberValueChanged(int)));
-ViewSettingsWidget.cpp (views):    QObject::connect(RTLSDisplayApplication::viewSettings(), SIGNAL(showSave(bool)), this, SLOT(showSave(bool)));
-ViewSettingsWidget.cpp (views):    QObject::connect(RTLSDisplayApplication::viewSettings(), SIGNAL(showGO(bool, bool)), this, SLOT(showOriginGrid(bool, bool)));
-ViewSettingsWidget.cpp (views):    QObject::connect(RTLSDisplayApplication::viewSettings(), SIGNAL(setFloorPlanPic()), this, SLOT(getFloorPlanPic()));
-ViewSettingsWidget.cpp (views):    QObject::connect(RTLSDisplayApplication::client(), SIGNAL(enableFiltering()), this, SLOT(enableFiltering()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->logging_pb, SIGNAL(clicked()), this, SLOT(loggingClicked()));
-ViewSettingsWidget.cpp (views):    RTLSDisplayApplication::connectReady(this, "onReady()");
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->floorplanFlipX_cb, SIGNAL(clicked()), mapper, SLOT(submit())); // Bug with QDataWidgetMapper (QTBUG-1818)
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->floorplanFlipY_cb, SIGNAL(clicked()), mapper, SLOT(submit()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->gridShow, SIGNAL(clicked()), mapper, SLOT(submit())); // Bug with QDataWidgetMapper (QTBUG-1818)
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->showOrigin, SIGNAL(clicked()), mapper, SLOT(submit()));
-ViewSettingsWidget.cpp (views):    QObject::connect(ui->filtering, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLocationFilter(int)));
-ViewSettingsWidget.cpp (views):    QObject::connect(tool, SIGNAL(done()), tool, SLOT(deleteLater()));
-ViewSettingsWidget.cpp (views):    QObject::connect(tool, SIGNAL(done()), tool, SLOT(deleteLater()));
+---- _ancArray Matches (119 in 2 files) ----
+RTLSClient.cpp (network):    //memset(&_ancArray, 0, MAX_NUM_ANCS*sizeof(anc_struct_t));
+RTLSClient.cpp (network):			if(_ancArray[aid].tagId.contains(tid) == false)
+RTLSClient.cpp (network):				_ancArray[aid].tagId.append(tid);
+RTLSClient.cpp (network):				_ancArray[aid].tagSum++;
+RTLSClient.cpp (network):			printf("_ancArray[0] = %d\n", _ancArray[0].tagSum);
+RTLSClient.cpp (network):			printf("_ancArray[1] = %d\n", _ancArray[1].tagSum);
+RTLSClient.cpp (network):                    QString s =  nowstr + QString("AP:%1:%2:%3:%4\n").arg(j).arg(_ancArray[j].x).arg(_ancArray[j].y).arg(_ancArray[j].z);
+RTLSClient.cpp (network):    //qDebug() << "a and t " << aid << tid << "correction = " << (_ancArray[aid].tagRangeCorection[tid] * 0.01);
+RTLSClient.cpp (network):                    _ancArray[i].x = estCoord.at(i,0);
+RTLSClient.cpp (network):                    _ancArray[i].y = estCoord.at(i,1);
+RTLSClient.cpp (network):                    emit anchPos(i, _ancArray[i].x, _ancArray[i].y, _ancArray[i].z, false, true); // Update table entry
+RTLSClient.cpp (network):    range_corrected = (0 == range)?0:(range + (_ancArray[aid].tagRangeCorection[tid] * 10)); //range correction is in cm (range is in mm)
+RTLSClient.cpp (network):    int range_corrected = range + (_ancArray[aid].tagRangeCorection[tid] * 10); //range correction is in cm (range is in mm)
+RTLSClient.cpp (network):    //qDebug() << "a and t " << aid << tid << "correction = " << (_ancArray[aid].tagRangeCorection[tid] * 0.01);
+RTLSClient.cpp (network):            report->x = _ancArray[keep0id].x;
+RTLSClient.cpp (network):            report->y = _ancArray[keep0id].y;
+RTLSClient.cpp (network):            report->z = _ancArray[keep0id].z;
+RTLSClient.cpp (network):                CtrPoints[i*3] = _ancArray[baseid[i-1]].x;
+RTLSClient.cpp (network):                CtrPoints[i*3+1] = _ancArray[baseid[i-1]].y;
+RTLSClient.cpp (network):                CtrPoints[i*3+2] = _ancArray[baseid[i-1]].z;
+RTLSClient.cpp (network):                CtrPoints[i*3] = _ancArray[baseid[i+1]].x;
+RTLSClient.cpp (network):                CtrPoints[i*3+1] = _ancArray[baseid[i+1]].y;
+RTLSClient.cpp (network):                CtrPoints[i*3+2] = _ancArray[baseid[i+1]].z;
+RTLSClient.cpp (network):            CtrPoints[i*3] = _ancArray[baseid[i]].x;
+RTLSClient.cpp (network):            CtrPoints[i*3+1] = _ancArray[baseid[i]].y;
+RTLSClient.cpp (network):            CtrPoints[i*3+2] = _ancArray[baseid[i]].z;
+RTLSClient.cpp (network):        //printf("keep0id = %d,%0.2f\n",keep0id,_ancArray[keep0id].x);
+RTLSClient.cpp (network):        report->x = _ancArray[keep0id].x;
+RTLSClient.cpp (network):        report->y = _ancArray[keep0id].y;
+RTLSClient.cpp (network):        report->z = _ancArray[keep0id].z;
+RTLSClient.cpp (network):    double dstAB = sqrt(pow(_ancArray[baseid0].x - _ancArray[baseid1].x, 2) + pow(_ancArray[baseid0].y - _ancArray[baseid1].y, 2));
+RTLSClient.cpp (network):    anc[0] = _ancArray[baseid0].x;
+RTLSClient.cpp (network):    anc[1] = _ancArray[baseid0].y;
+RTLSClient.cpp (network):    anc[2] = _ancArray[baseid1].x;
+RTLSClient.cpp (network):    anc[3] = _ancArray[baseid1].y;
+RTLSClient.cpp (network):    report->z = _ancArray[baseid0].z;
+RTLSClient.cpp (network):    anchorArray[0].x = _ancArray[0].x;
+RTLSClient.cpp (network):    anchorArray[0].y = _ancArray[0].y;
+RTLSClient.cpp (network):    anchorArray[0].z = _ancArray[0].z;
+RTLSClient.cpp (network):    anchorArray[1].x = _ancArray[1].x;
+RTLSClient.cpp (network):    anchorArray[1].y = _ancArray[1].y;
+RTLSClient.cpp (network):    anchorArray[1].z = _ancArray[1].z;
+RTLSClient.cpp (network):    anchorArray[2].x = _ancArray[2].x;
+RTLSClient.cpp (network):    anchorArray[2].y = _ancArray[2].y;
+RTLSClient.cpp (network):    anchorArray[2].z = _ancArray[2].z;
+RTLSClient.cpp (network):    anchorArray[3].x = _ancArray[3].x;
+RTLSClient.cpp (network):    anchorArray[3].y = _ancArray[3].y;
+RTLSClient.cpp (network):    anchorArray[3].z = _ancArray[3].z;
+RTLSClient.cpp (network):        if(_ancArray[i].id == 0xff)
+RTLSClient.cpp (network):            _ancArray[i].id = i;
+RTLSClient.cpp (network):            emit anchPos(i, _ancArray[i].x, _ancArray[i].y, _ancArray[i].z, false, false);
+RTLSClient.cpp (network):        _ancArray[i].id = 0xff;
+RTLSClient.cpp (network):        _ancArray[i].label = "";
+RTLSClient.cpp (network):        _ancArray[i].x = x[i];  //default x
+RTLSClient.cpp (network):        _ancArray[i].y = y[i];  //default y
+RTLSClient.cpp (network):        _ancArray[i].z = 3.00;  //default z
+RTLSClient.cpp (network):            _ancArray[i].tagRangeCorection[j] =  0;
+RTLSClient.cpp (network):                        _ancArray[id].id = id & 0xf;
+RTLSClient.cpp (network):                        _ancArray[id].label = (e.attribute( "label", "" ));
+RTLSClient.cpp (network):                        _ancArray[id].x = (e.attribute("x", "0.0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].y = (e.attribute("y", "0.0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].z = (e.attribute("z", "0.0")).toDouble(&ok);
+RTLSClient.cpp (network):						_ancArray[id].group = (e.attribute("Group", "")).toInt(&ok);
+RTLSClient.cpp (network):						printf("_ancArray[%d].group = %d\n", id,_ancArray[id].group);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[0] = (e.attribute("t0", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[1] = (e.attribute("t1", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[2] = (e.attribute("t2", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[3] = (e.attribute("t3", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[4] = (e.attribute("t4", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[5] = (e.attribute("t5", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[6] = (e.attribute("t6", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].tagRangeCorection[7] = (e.attribute("t7", "0")).toDouble(&ok);
+RTLSClient.cpp (network):                        _ancArray[id].show = (e.attribute("show","0")).toInt();
+RTLSClient.cpp (network):                        if(true == _ancArray[id].show)
+RTLSClient.cpp (network):                       emit anchPos(id, _ancArray[id].x, _ancArray[id].y, _ancArray[id].z, _ancArray[id].show, false);
+RTLSClient.cpp (network):					   //emit anchInfo(_ancArray[id].id, _ancArray[id].group, _ancArray[id].x, _ancArray[id].y, _ancArray[id].z);
+RTLSClient.cpp (network):        config.appendChild( AnchorToNode(doc, &_ancArray[i]) );
+RTLSClient.cpp (network):        _ancArray[id].x = value;
+RTLSClient.cpp (network):        _ancArray[id].y = value;
+RTLSClient.cpp (network):        _ancArray[id].z = value;
+RTLSClient.cpp (network):        QString s =  nowstr + QString("AP:%1:%2:%3:%4\n").arg(id).arg(_ancArray[id].x).arg(_ancArray[id].y).arg(_ancArray[id].z);
+RTLSClient.cpp (network):    _ancArray[aid].tagRangeCorection[tid] = value;
+RTLSClient.cpp (network):    if(_ancArray[id].show == show)
+RTLSClient.cpp (network):    _ancArray[id].show = show;
+RTLSClient.cpp (network):    return &_ancArray[anchID].tagRangeCorection[0];
+RTLSClient.cpp (network):            if(true == _ancArray[i].show)
+RTLSClient.cpp (network):                if(true == _ancArray[i].show)
+RTLSClient.cpp (network):                   int range_corrected = range + (_ancArray[i].tagRangeCorection[idx] * 10); //range correction is in cm (range is in mm)
+RTLSClient.cpp (network):                   emit tagRange(rp.id, _ancArray[i].id, (range_corrected * 0.001)); //convert to meters
+RTLSClient.cpp (network):    //int range_corrected = range + (_ancArray[aid].tagRangeCorection[tid] * 10); //range correction is in cm (range is in mm)
+RTLSClient.cpp (network):		ancTemp.tagSum = _ancArray[aid].tagSum;
+RTLSClient.cpp (network):		_tcpClient->sendAncStatus(aid,1,_ancArray[aid].tagSum);
+RTLSClient.cpp (network):		if(_ancArray[i].workState == 1)
+RTLSClient.cpp (network):			_tcpClient->sendAncStatus(_ancArray[i].id,_ancArray[i].workState,_ancArray[i].tagSum);
+RTLSClient.cpp (network):			_tcpClient->sendAncStatus(aid, 0 ,_ancArray[aid].tagSum);
+RTLSClient.h (network):    anc_struct_t _ancArray[MAX_NUM_ANCS];

@@ -424,7 +424,7 @@ public:
 
         retranslateUi(ViewSettingsWidget);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(ViewSettingsWidget);

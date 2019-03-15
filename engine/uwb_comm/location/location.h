@@ -3,7 +3,7 @@
 
 #define OFFICE 1
 
-#define MAX_TAG_NUM 64
+#define MAX_TAG_NUM 200 //64    ”√”⁄≤‚ ‘
 #define MAX_SUB_AREA_NUM 1
 
 typedef enum{

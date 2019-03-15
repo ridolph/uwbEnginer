@@ -56,7 +56,9 @@ public slots:
     void sendUpResp(int status, int *failBuf,int failCount, int *succBuf, int succCount);
 
     /*  ·¢ËÍ±êÇ©×´Ì¬    lwq 20190311    */
-    void sendTagStatus(int tag_id, int tag_status, int tag_area);
+    void sendTagStatus(int tag_id, int tag_status, QString tag_area);
+    /*  ·¢ËÍ»ùÕ¾×´Ì¬    lwq 20190312    */
+    void sendAncStatus(int tag_id, int tag_status, int tag_num);
 
 
 private slots:

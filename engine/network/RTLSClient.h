@@ -30,6 +30,8 @@
 #include <QMap>
 #include "KlmanFilter.h"
 
+
+
 class QFile;
 class DataAnchor;
 class DataTag;
@@ -46,7 +48,7 @@ class DataTag;
 #define FILTER_SIZE_SHORT 6
 
 #define MAX_NUM_TAGS MAX_TAG_NUM
-#define MAX_NUM_ANCS (16)
+#define MAX_NUM_ANCS (200)   //扩容
 
 typedef struct
 {
@@ -100,7 +102,10 @@ typedef struct
     int workState;  //标签工作状态 0：离线 1：在线 2：休眠 3：异常
     QDateTime upTime;   //上线时间
     QDateTime downTime; //下线时间
+    //QString area;   //区域范围
 } tag_reports_t;
+
+
 
 typedef struct
 {
@@ -113,7 +118,41 @@ typedef struct
     /*  20190311 新增   lwq*/
     int workState;  //基站工作状态 0：离线 1：在线 2：异常
     int group;  //基站所属组
+    QList<int> tagId;    //标签ID
+    int tagSum; //标签总数
 } anc_struct_t;
+
+
+typedef struct 
+{
+    double x, y, z;
+    uint64_t id;
+    QString label;
+    int tagRangeCorection[MAX_NUM_TAGS];
+    bool show;
+
+    /*  20190311 新增   lwq*/
+    QString addr;
+    int port;
+    int workState;  //基站工作状态 0：离线 1：在线 2：异常
+    int group;  //基站所属组
+    QList<int> tagId;    //标签ID
+    int tagSum; //标签总数
+
+    int klmanFlag;  
+    KlmanFilter *xKlman;
+    KlmanFilter *yKlman;
+}anc_reports_t;
+
+typedef struct
+{
+    int group;
+    int klmanFlag;  
+    KlmanFilter *xKlman;
+    KlmanFilter *yKlman;
+   
+
+}filter_config_t;
 
 typedef struct
 {
@@ -197,6 +236,8 @@ signals:
     void sendRecoverCmdRsut(int aid, bool ok);
     void sendGetVerRsut(int aid, QString ver);
 
+    void anchInfo(int, int, double, double, double);
+
 
 public slots:
     void newUdpData();
@@ -206,6 +247,12 @@ public slots:
     void SendAlarm(int tagId, ALARM_TYPE alarmType, uint8_t op);
     void setServer(QString addr, int port);
     void setOutServer(QString addr, int port);
+
+    /*  新增 lwq 20190315   */
+    void sendAncStatus(int aid, QString addr, int port);
+    void sendAncStatusDown(int aid);
+    void addNewAncTagSum(int ancID, int tagID);
+    
 protected slots:
     void onReady();
     void onConnected(QString ver, QString conf);
@@ -213,6 +260,9 @@ protected slots:
     void updateAnchorXYZ(int id, int x, double value);
     void updateTagCorrection(int aid, int tid, int value);
     void updateAnchorShow(int id, bool show);
+
+    /*  定时发送基站状态    lwq 20190315    */
+    void sendAncStatusTimeOut(void);
 
 private slots:
     void connectionStateChanged(SerialConnection::ConnectionState);
@@ -227,9 +277,10 @@ public:
     UWB_HTTP *_HttpClient;
     UWB_TcpClient *_tcpClient;
 	UWB_TcpClient *_tcpClientOutServer;
+  
 
- 
-   
+    /*  定时上报状态信息    */
+    QTimer *_sendStatusOntimeTimer;
 
 private:
     bool _graphicsWidgetReady;
@@ -237,7 +288,7 @@ private:
     bool _useAutoPos;
 
     QList <tag_reports_t> _tagList;
-    QList <anc_struct_t> _ancList;
+    QList <anc_reports_t> _ancList;
 
     anc_struct_t _ancArray[MAX_NUM_ANCS];
     int _ancMaxShowCount;

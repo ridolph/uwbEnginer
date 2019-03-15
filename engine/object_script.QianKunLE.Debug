@@ -33,6 +33,8 @@ INPUT(
 ./debug\vec1.o
 ./debug\UWB_UdpClient.o
 ./debug\Mylog.o
+./debug\linklist.o
+./debug\viewancgroupwidget.o
 ./debug\moc_RTLSDisplayApplication.o
 ./debug\moc_mainwindow.o
 ./debug\moc_RTLSClient.o
@@ -59,4 +61,5 @@ INPUT(
 ./debug\moc_AncUpSrvConfigWidget.o
 ./debug\moc_UWB_UdpClient.o
 ./debug\moc_Mylog.o
+./debug\moc_viewancgroupwidget.o
 );

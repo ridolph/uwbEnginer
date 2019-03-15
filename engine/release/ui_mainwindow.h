@@ -35,11 +35,14 @@ public:
     QAction *actionConfigServer;
     QAction *actionScanConfig;
     QAction *actionTagManage;
+    QAction *actionDd;
+    QAction *actionDddd;
     GraphicsWidget *graphicsWidget;
     QMenuBar *menuBar;
     QMenu *viewMenu;
     QMenu *helpMenu;
     QMenu *menu;
+    QMenu *menu_2;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *viewSettings_dw;
@@ -67,6 +70,10 @@ public:
         actionScanConfig->setObjectName(QStringLiteral("actionScanConfig"));
         actionTagManage = new QAction(MainWindow);
         actionTagManage->setObjectName(QStringLiteral("actionTagManage"));
+        actionDd = new QAction(MainWindow);
+        actionDd->setObjectName(QStringLiteral("actionDd"));
+        actionDddd = new QAction(MainWindow);
+        actionDddd->setObjectName(QStringLiteral("actionDddd"));
         graphicsWidget = new GraphicsWidget(MainWindow);
         graphicsWidget->setObjectName(QStringLiteral("graphicsWidget"));
         MainWindow->setCentralWidget(graphicsWidget);
@@ -79,6 +86,8 @@ public:
         helpMenu->setObjectName(QStringLiteral("helpMenu"));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
+        menu_2 = new QMenu(menuBar);
+        menu_2->setObjectName(QStringLiteral("menu_2"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -104,10 +113,13 @@ public:
         menuBar->addAction(viewMenu->menuAction());
         menuBar->addAction(helpMenu->menuAction());
         menuBar->addAction(menu->menuAction());
+        menuBar->addAction(menu_2->menuAction());
         helpMenu->addAction(actionAbout);
         menu->addAction(actionConfigServer);
         menu->addAction(actionScanConfig);
         menu->addAction(actionTagManage);
+        menu_2->addAction(actionDd);
+        menu_2->addAction(actionDddd);
 
         retranslateUi(MainWindow);
 
@@ -123,9 +135,12 @@ public:
         actionConfigServer->setText(QApplication::translate("MainWindow", "\351\205\215\347\275\256TCP\346\234\215\345\212\241\345\231\250\345\234\260\345\235\200", 0));
         actionScanConfig->setText(QApplication::translate("MainWindow", "\347\263\273\347\273\237\345\217\202\346\225\260\351\205\215\347\275\256", 0));
         actionTagManage->setText(QApplication::translate("MainWindow", "\350\256\276\345\244\207\347\256\241\347\220\206", 0));
+        actionDd->setText(QApplication::translate("MainWindow", "\345\237\272\347\253\231\346\211\253\346\217\217", 0));
+        actionDddd->setText(QApplication::translate("MainWindow", "\345\217\202\346\225\260\344\270\213\345\217\221", 0));
         viewMenu->setTitle(QApplication::translate("MainWindow", "&View", 0));
         helpMenu->setTitle(QApplication::translate("MainWindow", "Help", 0));
         menu->setTitle(QApplication::translate("MainWindow", "\345\212\237\350\203\275", 0));
+        menu_2->setTitle(QApplication::translate("MainWindow", "\345\237\272\347\253\231\347\256\241\347\220\206", 0));
         viewSettings_dw->setWindowTitle(QApplication::translate("MainWindow", "Settings", 0));
         minimap_dw->setWindowTitle(QApplication::translate("MainWindow", "Minimap", 0));
     } // retranslateUi

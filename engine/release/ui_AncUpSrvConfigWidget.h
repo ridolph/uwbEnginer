@@ -34,14 +34,17 @@ public:
     QPushButton *cancelBtn;
     QLabel *label_4;
     QLineEdit *verEdit;
+    QLabel *label_5;
+    QLineEdit *gropuEdit;
 
     void setupUi(QWidget *AncUpSrvConfigWidget)
     {
         if (AncUpSrvConfigWidget->objectName().isEmpty())
             AncUpSrvConfigWidget->setObjectName(QStringLiteral("AncUpSrvConfigWidget"));
+        AncUpSrvConfigWidget->setEnabled(true);
         AncUpSrvConfigWidget->resize(335, 267);
         AncUpSrvConfigWidget->setMinimumSize(QSize(335, 267));
-        AncUpSrvConfigWidget->setMaximumSize(QSize(335, 267));
+        AncUpSrvConfigWidget->setMaximumSize(QSize(360, 280));
         label = new QLabel(AncUpSrvConfigWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(40, 20, 91, 31));
@@ -62,16 +65,22 @@ public:
         upFilePathEdit->setGeometry(QRect(160, 100, 141, 31));
         okBtn = new QPushButton(AncUpSrvConfigWidget);
         okBtn->setObjectName(QStringLiteral("okBtn"));
-        okBtn->setGeometry(QRect(90, 200, 75, 41));
+        okBtn->setGeometry(QRect(50, 220, 75, 41));
         cancelBtn = new QPushButton(AncUpSrvConfigWidget);
         cancelBtn->setObjectName(QStringLiteral("cancelBtn"));
-        cancelBtn->setGeometry(QRect(220, 200, 75, 41));
+        cancelBtn->setGeometry(QRect(180, 220, 75, 41));
         label_4 = new QLabel(AncUpSrvConfigWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(40, 140, 101, 31));
         verEdit = new QLineEdit(AncUpSrvConfigWidget);
         verEdit->setObjectName(QStringLiteral("verEdit"));
         verEdit->setGeometry(QRect(160, 140, 141, 31));
+        label_5 = new QLabel(AncUpSrvConfigWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(40, 180, 101, 31));
+        gropuEdit = new QLineEdit(AncUpSrvConfigWidget);
+        gropuEdit->setObjectName(QStringLiteral("gropuEdit"));
+        gropuEdit->setGeometry(QRect(160, 180, 141, 31));
 
         retranslateUi(AncUpSrvConfigWidget);
 
@@ -87,6 +96,7 @@ public:
         okBtn->setText(QApplication::translate("AncUpSrvConfigWidget", "\347\241\256\345\256\232", 0));
         cancelBtn->setText(QApplication::translate("AncUpSrvConfigWidget", "\345\217\226\346\266\210", 0));
         label_4->setText(QApplication::translate("AncUpSrvConfigWidget", "\347\211\210\346\234\254:", 0));
+        label_5->setText(QApplication::translate("AncUpSrvConfigWidget", "\346\211\200\345\261\236\347\273\204:", 0));
     } // retranslateUi
 
 };

@@ -40,8 +40,6 @@
 
 #include <locdll.h>
 
-#include "LinkList.h"
-
 
 //#define MAX((x),(y)) ((x) > (y)? (x): (y))
 #define MAX(a,b) ((a)>(b)?(a):(b))
@@ -181,11 +179,15 @@ RTLSClient::RTLSClient(QObject *parent) :
     1 - Moving Average
     2 - Moving Average excluding max and min
     */
+
+	_sendStatusOntimeTimer = new QTimer;
+	
     _locationFilterTypes << "None" << "Moving Average" << "Moving Avg. Ex";
     _usingFilter = 0;
 
     _graphicsWidgetReady = false ;
     _tagList.clear();
+	_ancList.clear();
 
     //memset(&_ancArray, 0, MAX_NUM_ANCS*sizeof(anc_struct_t));
     _serial = NULL;
@@ -201,12 +203,15 @@ RTLSClient::RTLSClient(QObject *parent) :
         }
     }
 
-	LinkList anc_info;
-	LinkList tag_info;
-
-
     _ancRangeLastSeq = 0x0;
     _ancRangeCount = 0;
+
+	connect(_sendStatusOntimeTimer, SIGNAL(timeout()), this, SLOT(sendAncStatusTimeOut()));
+
+	/*	设置定时器时间	*/
+	_sendStatusOntimeTimer->setInterval(10000);
+
+	_sendStatusOntimeTimer->start();
 
     RTLSDisplayApplication::connectReady(this, "onReady()");
 
@@ -546,6 +551,9 @@ void RTLSClient::writeOutServerSettings()
 void RTLSClient::initialiseTagList(int id)
 {
     tag_reports_t r;
+
+	QDateTime time = QDateTime::currentDateTime();
+	
     memset(&r, 0, sizeof(tag_reports_t));
     r.id = id;
     r.ready = false;
@@ -560,6 +568,11 @@ void RTLSClient::initialiseTagList(int id)
     r.heartRate = 0xff;
     r.power = 0xff;
     r.state = 0xff;
+
+	/*	标签状态扩容	lwq	20190311	*/
+	r.workState = 1;
+	r.upTime = time;
+	
     _tagList.append(r);
 }
 
@@ -858,8 +871,7 @@ void RTLSClient::newUdpData()
 	file.flush();    
 	file.close();
 #endif
-
-	
+	printf("newUdpData========\n");
     data.resize(_udpSocket->pendingDatagramSize());
     _udpSocket->readDatagram(data.data(), data.size(), &cliAddr, &port);
     quint32 ipv4 = cliAddr.toIPv4Address();
@@ -871,7 +883,21 @@ void RTLSClient::newUdpData()
     QString addr;
     addr.sprintf("%d.%d.%d.%d",ip1, ip2, ip3, ip4);
     //qDebug()<<"addr::"<<addr << ipv4 << ip1<<ip2<<ip3<<ip4<<"port:"<<port;
-    printf("UDP================newData %d\n", port);
+    //printf("UDP================newData %d data = %s\n", port, data.data());
+
+#if 0	
+	
+		QDateTime now = QDateTime::currentDateTime();
+		QString nowstr = now.toString("yyyyMMdd_hhmmss");
+	
+		/*	用于压力测试记录 */
+		QFile file("log.txt");
+		file.open(QIODevice::WriteOnly | QIODevice::Append);	  
+		QTextStream text_stream(&file);  
+		text_stream  << data << "\r\n";	  
+		file.flush();	 
+		file.close();
+#endif
     newData(data, addr, port);
 }
 
@@ -902,6 +928,9 @@ void RTLSClient::newTcpOrSerialData()
     //qDebug() << data;
     printf("TCP================newData\n");
     newData(data, addr, port);
+
+	
+	
 }
 
 //处理udp/tcp/serial 数据
@@ -1053,6 +1082,22 @@ void RTLSClient::newData(QByteArray &data, QString addr, qint64 port)
                        &ancid[6],&anctof[6],
                        &ancid[7],&anctof[7],
                        &lnum, &seq,&rangetime, &heartRate, &power, &state);
+
+			/*	统计基站标签个数	*/
+			printf("anc = %d, tag_id = %d\n", aid, tid);
+
+			//addNewAncTagSum(aid, tid);
+			#if 1
+			if(_ancArray[aid].tagId.contains(tid) == false)
+			{
+				_ancArray[aid].tagId.append(tid);
+				_ancArray[aid].tagSum++;
+			}
+			
+			printf("_ancArray[0] = %d\n", _ancArray[0].tagSum);
+			printf("_ancArray[1] = %d\n", _ancArray[1].tagSum);
+			#endif
+
             //mask = 1;
             memset(range,0,sizeof(range));
 
@@ -1171,6 +1216,7 @@ void RTLSClient::newData(QByteArray &data, QString addr, qint64 port)
             _first = false;
         }
         printf("mask=%d\n",mask);
+		printf("seq=%d\n",seq);
 
         if((type == 'c')||(type == 'n')) //if 'c' these reports relate to tag <-> anchor ranges
         {
@@ -1220,7 +1266,6 @@ void RTLSClient::newData(QByteArray &data, QString addr, qint64 port)
         }
 #endif
     }
-
 }
 
 
@@ -1408,6 +1453,7 @@ void RTLSClient::processHeartRateReport(int tid, int heartRate, int power, int s
     //if we don't have this tag in the list add it
     if(idx == _tagList.size())
     {
+    	printf("processHeartRateReport\n");
         initialiseTagList(tid);
     }
     tag_reports_t rp = _tagList.at(idx);
@@ -1419,12 +1465,28 @@ void RTLSClient::processHeartRateReport(int tid, int heartRate, int power, int s
     //if(rp.power == 0xff)
     {
         rp.power = power;
+		#if 0
+		if(power < 21)
+		{
+			/*	低电量异常	*/
+			rp.workState = 3;
+			_tcpClient->sendTagStatus(tid, 3, "01");
+		}
+		#endif
+		printf("processHeartRateReport = %d state = %d\n,",power, state);
     }
 
     //if(rp.state == 0xff)
     {
-        rp.state = state;
+    	rp.state = state;
     }
+
+	if(((state & 0x02) == 0) == 1 || ((state & 0x04) == 1) || (power < 21))
+	{
+		/*	表带剪断异常	|| SOS求救异常	||	低电量异常	*/
+		rp.workState = 3;
+		_tcpClient->sendTagStatus(tid, 3, "01");
+	}
 
     //update the list entry
     _tagList.replace(idx, rp);
@@ -1451,7 +1513,8 @@ void RTLSClient::processTagRangeReport(int aid, int tid, int range, int lnum, in
     if(idx == _tagList.size())
     {
     	/*	新标签上线 发送消息给后台*/
-		_tcpClient->sendTagStatus(1, 2, 3);
+		printf("processTagRangeReport\n");
+		_tcpClient->sendTagStatus(tid, 1, "01");
         initialiseTagList(tid);
     }
     tag_reports_t rp = _tagList.at(idx);
@@ -1463,7 +1526,7 @@ void RTLSClient::processTagRangeReport(int aid, int tid, int range, int lnum, in
         rp.startMsec = 0;
         if(seq>0)
         {
-            rp.rangeSeq = seq-1;
+            rp.rangeSeq = seq - 1;
         }
         else
         {
@@ -1591,6 +1654,7 @@ void RTLSClient::trilaterateTag(int tid, int seq, int mask)
     tag_reports_t rp = _tagList.at(idx);
 
     lastSeq = (seq) & 0xFF ;
+	printf("aaaaaaaaaseq = %d\n", seq);
     count = rp.rangeCount[lastSeq];
     if(rp.state != 0xff)
     {
@@ -1650,6 +1714,7 @@ void RTLSClient::trilaterateTag(int tid, int seq, int mask)
             ret = calculateTagLocation(&report, count, mask,&rp.rangeValue[lastSeq][0]);
         }
 
+		printf("ret=======%d\n", ret);
         if(ret != -1)
         {
             qDebug()<<"X:"<<report.x<<"Y:"<<report.y<<"Z:"<<report.z;//原始坐标
@@ -1718,7 +1783,7 @@ void RTLSClient::trilaterateTag(int tid, int seq, int mask)
                 qDebug()<<"fx:"<<rp.fx<<"fy:"<<rp.fy<<"fz:"<<rp.fz;
 
 				/*	位置边界处理	*/
-				printf("location1 fx = %f, fy = %f\n", rp.fx, rp.fy);
+				printf("location1 tid = %d, fx = %f, fy = %f\n", tid, rp.fx, rp.fy);
 				tagPositionCorrect(&rp.fx, &rp.fy, 0, 0);
 				printf("location2 fx = %f, fy = %f\n", rp.fx, rp.fy);
 				
@@ -2053,6 +2118,7 @@ int RTLSClient::calculateTagLocation(vec3d *report, int count, int mask,int *ran
     id2 = _configfile->value(id).toString();
     _configfile->endGroup();
 
+
     if(id2 == "")
     {
         return -1;
@@ -2066,7 +2132,7 @@ int RTLSClient::calculateTagLocation(vec3d *report, int count, int mask,int *ran
     tmpAr.aid = baseid[0];
     tmpAr.range = ranges[baseid[0]];
     arList<<tmpAr;
-    for(i=0;i<list.size();i++)
+    for(i = 0; i < list.size(); i++)
     {
         baseid[i+1] = list[i].toInt();
         tmpAr.aid = baseid[i+1];
@@ -2077,6 +2143,7 @@ int RTLSClient::calculateTagLocation(vec3d *report, int count, int mask,int *ran
             Base3++;
             ranges[baseid[i+1]] =0;
             qDebug()<<"list.size:"<<list.size();
+			printf("A=================%d Base3=%d list.size() = %d\n", i, Base3, list.size());
             if(Base3 >(list.size()-2))
                 return -1;
         }
@@ -2084,10 +2151,11 @@ int RTLSClient::calculateTagLocation(vec3d *report, int count, int mask,int *ran
         {
             tmpAr.range = ranges[baseid[i+1]];
         }
-
+		printf("B=================%dBase3 = %d list.size() = %d\n",i,Base3, list.size());
         arList<<tmpAr;
     }
 
+	printf("3=================\n");
     //按照aid对应的rang升序排列，range为0排后面
     sortAncRange(&arList);
     i = 0;
@@ -2100,7 +2168,7 @@ int RTLSClient::calculateTagLocation(vec3d *report, int count, int mask,int *ran
 
 #if 1
     //新算法基站位置赋值
-    for(i=0;i<M;i++)
+    for(i = 0; i < M; i++)
     {
         printf("ranges[%d]=%d,baseid = %d,\r\n",i,ranges[baseid[i]] ,baseid[i]);
         if(ranges[baseid[i]] == 0)
@@ -2130,9 +2198,9 @@ int RTLSClient::calculateTagLocation(vec3d *report, int count, int mask,int *ran
     }
 #endif
 
-    //qDebug()<<d[0]<<d[1]<<d[2]<<d[3]<<CtrPoints[0]<<CtrPoints[1]<<CtrPoints[2]<<CtrPoints[3]
-     //       <<CtrPoints[4]<<CtrPoints[5]<<CtrPoints[6]<<CtrPoints[7]<<CtrPoints[8]<<CtrPoints[9]
-      //      <<CtrPoints[10]<<CtrPoints[11];
+	//qDebug()<<d[0]<<d[1]<<d[2]<<d[3]<<CtrPoints[0]<<CtrPoints[1]<<CtrPoints[2]<<CtrPoints[3]
+	//       <<CtrPoints[4]<<CtrPoints[5]<<CtrPoints[6]<<CtrPoints[7]<<CtrPoints[8]<<CtrPoints[9]
+	//      <<CtrPoints[10]<<CtrPoints[11];
 
 
     location_4P( CtrPoints,d, P);
@@ -2365,7 +2433,6 @@ void RTLSClient::connectionStateChanged(SerialConnection::ConnectionState state)
             _file->close(); //close the Log file
         }
     }
-
 }
 
 
@@ -2374,7 +2441,7 @@ void RTLSClient::addMissingAnchors(void)
     int i;
 
     //check how many anchors were added and add placeholders for any missing ones
-    for(i=0; i<MAX_NUM_ANCS; i++)
+    for(i = 0; i < MAX_NUM_ANCS; i++)
     {
         if(_ancArray[i].id == 0xff)
         {
@@ -2382,7 +2449,6 @@ void RTLSClient::addMissingAnchors(void)
             emit anchPos(i, _ancArray[i].x, _ancArray[i].y, _ancArray[i].z, false, false);
         }
     }
-
     emit centerOnAnchors();
 }
 
@@ -2390,12 +2456,18 @@ void RTLSClient::loadConfigFile(QString filename)
 {
     QFile file(filename);
 
-    double x[MAX_NUM_ANCS] = {0.0};
-    double y[MAX_NUM_ANCS] = {0.0};
+    double x[MAX_NUM_ANCS];
+    double y[MAX_NUM_ANCS];
 
     _ancMaxShowCount = 0;
 
-    for(int i=0; i<MAX_NUM_ANCS; i++)
+	for(int j = 0; j < MAX_NUM_ANCS; j++)
+	{
+		x[j] = 0.0;
+		y[j] = 0.0;
+	}
+
+	for(int i = 0; i < MAX_NUM_ANCS; i++)
     {
         _ancArray[i].id = 0xff;
         _ancArray[i].label = "";
@@ -2403,7 +2475,7 @@ void RTLSClient::loadConfigFile(QString filename)
         _ancArray[i].y = y[i];  //default y
         _ancArray[i].z = 3.00;  //default z
 
-        for(int j = 0; j<MAX_NUM_TAGS; j++)
+        for(int j = 0; j < MAX_NUM_TAGS; j++)
         {
             _ancArray[i].tagRangeCorection[j] =  0;
         }
@@ -2451,6 +2523,10 @@ void RTLSClient::loadConfigFile(QString filename)
                         _ancArray[id].y = (e.attribute("y", "0.0")).toDouble(&ok);
                         _ancArray[id].z = (e.attribute("z", "0.0")).toDouble(&ok);
 
+						_ancArray[id].group = (e.attribute("Group", "")).toInt(&ok);
+
+						printf("_ancArray[%d].group = %d\n", id,_ancArray[id].group);
+
                         //tag distance correction (in cm)
                         _ancArray[id].tagRangeCorection[0] = (e.attribute("t0", "0")).toDouble(&ok);
                         _ancArray[id].tagRangeCorection[1] = (e.attribute("t1", "0")).toDouble(&ok);
@@ -2468,11 +2544,11 @@ void RTLSClient::loadConfigFile(QString filename)
                         }
 
                        emit anchPos(id, _ancArray[id].x, _ancArray[id].y, _ancArray[id].z, _ancArray[id].show, false);
+					   //emit anchInfo(_ancArray[id].id, _ancArray[id].group, _ancArray[id].x, _ancArray[id].y, _ancArray[id].z);
 
                     }
                 }
             }
-
             n = n.nextSibling();
         }
 
@@ -2499,6 +2575,7 @@ QDomElement AnchorToNode( QDomDocument &d, anc_struct_t * anc )
     cn.setAttribute("t5", anc->tagRangeCorection[5]);
     cn.setAttribute("t6", anc->tagRangeCorection[6]);
     cn.setAttribute("t7", anc->tagRangeCorection[7]);
+	cn.setAttribute("Group", anc->group);
     cn.setAttribute("show", anc->show);
 
     return cn;
@@ -2614,6 +2691,7 @@ void RTLSClient::periodCalcProcess()
     msec = clock();
     tag_reports_t rp;
 
+	
     for(idx=0; idx<_tagList.size(); idx++)
     {
         rp = _tagList.at(idx);
@@ -2679,9 +2757,6 @@ void RTLSClient::periodCalcProcess()
                     rp.msec =clock();
                     rp.count = 0;
                 }
-
-
-
             }
 
             if(rp.power != 0xff)
@@ -2921,6 +2996,157 @@ void RTLSClient::tagPositionCorrect(double *fx, double *fy, double fx_j = 0, dou
 		printf("4y======================\n");
 		*fy = (AREA_Y - MODIFYVALUE);
 	}	
+}
+
+/*************************************************************
+*	Name:		addNewAncTagSum
+*	Func:		统计基站标签ID个数
+*	Input:		ancID: 基站标签	tagID: 标签ID
+*	Output:		void
+*	Return:		void
+**************************************************************/
+void RTLSClient::addNewAncTagSum(int ancID, int tagID)
+{
+	int idx;
+	int i;
+	anc_reports_t ancTemp;
+	anc_reports_t ancReplace;
+
+ 	printf("1==================\n");
+	for(idx = 0; idx < _ancList.size(); idx++)
+	{
+		if(_ancList.at(idx).id == ancID)
+			break;
+	}
+
+	printf("2==================\n");
+
+	/*	没有设备 添加	*/
+	if(idx == ancID)
+	{
+		printf("3==================\n");
+		ancTemp.id = ancID;
+		ancTemp.tagId.append(tagID);
+		ancTemp.tagSum = 1;
+		ancTemp.workState = 1;
+		_ancList.append(ancTemp);
+	}else/*	有设备 更新	*/
+	{
+		printf("4==================\n");
+		for(i = 0; i < _ancList.at(idx).tagId.size(); i++)
+		{
+			if(_ancList.at(idx).tagId.at(i) ==  tagID)
+				break;
+		}
+
+		if(i == tagID)
+		{
+			//printf("tagSum = %d\n", _ancList.at(idx).tagSum);
+			//_ancList.value(idx).tagSum++;
+			//_ancList.value(idx).tagId.append(tagID);
+			ancReplace = _ancList.value(idx);
+			ancReplace.tagSum++;
+			ancReplace.tagId.append(tagID);
+			_ancList.replace(idx, ancReplace);
+		}
+	}
+}
+
+/*************************************************************
+*	Name:		sendAncStatus
+*	Func:		发送基站状态
+*	Input:		aid: 基站状态 addr: 基站地址 port: 基站端口
+*	Output:		void
+*	Return:		void
+**************************************************************/
+void RTLSClient::sendAncStatus(int aid, QString addr, int port)
+{
+	anc_reports_t ancTemp;
+	int idx = 0;
+
+	#if 1
+	for(idx = 0; idx < _ancList.size(); idx++)
+	{
+		if(_ancList.at(idx).id == aid)
+			break;
+	}
+
+	if(idx == _ancList.size())
+	{
+		//memset(&ancTemp, 0, sizeof(anc_reports_t));
+		ancTemp.id = aid;
+		ancTemp.addr = addr;
+		ancTemp.port = port;
+		ancTemp.tagSum = _ancArray[aid].tagSum;
+		ancTemp.workState = 1;
+		_ancList.append(ancTemp);
+		_tcpClient->sendAncStatus(aid,1,_ancArray[aid].tagSum);
+	}
+	#endif
+	//printf("sendAncStatus = %d %d \n", _ancList.size(), _ancList.at(0).id);
+}
+
+
+/*************************************************************
+*	Name:		sendAncStatusTimeOut
+*	Func:		定时发送基站和标签状态
+*	Input:		void
+*	Output:		void
+*	Return:		void
+**************************************************************/
+void RTLSClient::sendAncStatusTimeOut(void)
+{
+	int i;
+
+#if 1
+	/*	发送标签状态	*/
+	for(i = 0; i < _tagList.size(); i++)
+	{
+		if(_tagList.at(i).workState == 1)
+		{
+			_tcpClient->sendTagStatus(_tagList.at(i).id, _tagList.at(i).workState, "01");
+		}
+	}
+#endif
+
+	/*	发送基站状态	*/
+	printf("sendAncStatusTimeOut\n");
+
+#if 1
+	for(i = 0; i < MAX_NUM_ANCS; i++)
+	{
+		if(_ancArray[i].workState == 1)
+		{
+			_tcpClient->sendAncStatus(_ancArray[i].id,_ancArray[i].workState,_ancArray[i].tagSum);
+		}
+	}	
+#endif
+
+}
+
+/*************************************************************
+*	Name:		sendAncStatusDown
+*	Func:		基站下线通知
+*	Input:		aid: 基站ID 
+*	Output:		void
+*	Return:		void
+**************************************************************/
+void RTLSClient::sendAncStatusDown(int aid)
+{
+	int idx;
+	anc_reports_t ancTemp;
+	
+	printf("sendAncStatus===123=-==%d\n",aid);
+
+	for(idx = 0; idx < _ancList.size(); idx++)
+	{
+		if(_ancList.at(idx).id == aid)
+		{
+			_tcpClient->sendAncStatus(aid, 0 ,_ancArray[aid].tagSum);
+			_ancList.removeAt(idx);
+			break;
+		}
+	}
 }
 
 

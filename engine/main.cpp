@@ -26,10 +26,14 @@
 
 #include <QMessageBox>
 
+
+
+
 int main(int argc, char *argv[])
 {
     int time = 0;
     int ret = -1;
+
 
     qInstallMessageHandler(Mylog::outputMessage);
 
